@@ -111,7 +111,10 @@ const CarruselArticulo = ({ articulo }) => {
   const onScroll = () => {
     const el = ref.current;
     if (!el || el.clientWidth === 0) return;
-    setIndice(Math.round(el.scrollLeft / el.clientWidth));
+    // Sin este guard se hacía setState por cada píxel scrolleado y el modal
+    // se re-renderizaba entero durante el gesto (tirones en tablet).
+    const siguiente = Math.round(el.scrollLeft / el.clientWidth);
+    setIndice((prev) => (prev === siguiente ? prev : siguiente));
   };
 
   const irA = (i) => {
@@ -155,6 +158,7 @@ const CarruselArticulo = ({ articulo }) => {
               src={img}
               alt=""
               loading="lazy"
+              decoding="async"
               draggable={false}
               className="h-full w-full select-none object-contain"
             />
@@ -307,7 +311,9 @@ const Novedades = ({ items }) => {
                     src={novedad.imagen}
                     alt={novedad.titulo}
                     loading="lazy"
-                    className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                    decoding="async"
+                    draggable={false}
+                    className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
                   <span className="absolute left-2 top-2 rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-semibold text-[#0F3A7A] backdrop-blur sm:left-3 sm:top-3 sm:px-2.5 sm:py-0.5 sm:text-[10px]">
                     {novedad.categoria}

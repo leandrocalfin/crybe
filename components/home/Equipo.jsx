@@ -5,32 +5,31 @@ import { Info, X, CalendarDays, MapPin, Video } from "lucide-react";
 
 import { profesionales } from "../../data/profesionales";
 
-const fotoInicial = (profesional) => {
-  const apellido = profesional.nombre?.trim().split(/\s+/).pop() || "";
-  return `/${apellido}.png`;
-};
-
 const FotoConFallback = ({ profesional, className }) => {
-  const [fotoSrc, setFotoSrc] = useState(fotoInicial(profesional));
-
-  useEffect(() => {
-    setFotoSrc(fotoInicial(profesional));
-  }, [profesional]);
+  // Orden: primero la foto real (Supabase o la configurada), y SOLO si falla
+  // se prueban los archivos locales. Antes era al revés: pedía /Apellido.png
+  // (404) → /Apellido.jpeg (404) → recién la real. Cada tarjeta descargaba
+  // 2 archivos inexistentes antes de mostrar la foto: de ahí la "doble carga"
+  // y el parpadeo en mobile.
+  // El `key` con el id en cada uso reinicia el estado al cambiar de
+  // profesional, sin efectos en cascada.
+  const apellido = profesional.nombre?.trim().split(/\s+/).pop() || "";
+  const locales = [`/${apellido}.png`, `/${apellido}.jpeg`];
+  const [fotoSrc, setFotoSrc] = useState(profesional.foto || locales[0]);
+  const [intento, setIntento] = useState(0);
 
   return (
     <img
       src={fotoSrc}
       onError={() => {
-        const apellido =
-          profesional.nombre?.trim().split(/\s+/).pop() || "";
-        if (fotoSrc === `/${apellido}.png`) {
-          setFotoSrc(`/${apellido}.jpeg`);
-        } else if (fotoSrc !== profesional.foto) {
-          setFotoSrc(profesional.foto);
+        if (intento < locales.length) {
+          setFotoSrc(locales[intento]);
+          setIntento((i) => i + 1);
         }
       }}
       alt={profesional.nombre}
       loading="lazy"
+      decoding="async"
       className={className}
     />
   );
@@ -60,6 +59,7 @@ const TarjetaProfesional = ({ profesional, index, onVerPerfil }) => {
         <div className="mb-1 flex flex-col items-center gap-1 text-center">
           <div className="h-14 w-14 shrink-0 overflow-hidden rounded-full bg-[#EAF4FB] shadow-[0_6px_18px_rgba(15,58,122,0.18)] md:h-14 md:w-14 lg:h-16 lg:w-16">
             <FotoConFallback
+              key={profesional.id ?? profesional.nombre}
               profesional={profesional}
               className="h-full w-full object-cover object-top"
             />
@@ -265,6 +265,7 @@ const Equipo = ({ lista: listaProp }) => {
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-5">
                 <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full bg-[#EAF4FB] shadow-[0_6px_18px_rgba(15,58,122,0.18)]">
                   <FotoConFallback
+                    key={perfil.id ?? perfil.nombre}
                     profesional={perfil}
                     className="h-full w-full object-cover object-top"
                   />

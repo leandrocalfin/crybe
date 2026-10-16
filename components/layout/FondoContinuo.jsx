@@ -1,9 +1,13 @@
 "use client";
+// Los blobs con blur grande fijos sobre toda la página obligan a la GPU a
+// repintar áreas enormes en cada scroll. En celu/tablet eso traba todo, así
+// que solo se renderizan en desktop (md+). El diseño no cambia: el fondo base
+// (#F4F8FB) ya cubre mobile.
 const FondoContinuo = () => {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden"
+      className="pointer-events-none absolute inset-0 hidden overflow-hidden md:block"
     >
       {/* Superior derecha - Hero: eliminada para foto nítida */}
 

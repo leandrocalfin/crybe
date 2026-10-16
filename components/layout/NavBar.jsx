@@ -114,12 +114,22 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
   }, []);
 
   useEffect(() => {
-    const actualizarNavbar = () => {
-      setScrolled(window.scrollY > 20);
+    // Las secciones no cambian al scrollear: se cachean y solo se
+    // recalculan al redimensionar. Antes se hacía querySelectorAll +
+    // offsetTop en CADA evento de scroll (layout thrash) y en tablet se
+    // sentía como tirones.
+    let secciones = [];
+    let ticking = false;
 
-      const secciones = Array.from(
+    const medirSecciones = () => {
+      secciones = Array.from(
         document.querySelectorAll("[data-navbar-color]")
-      );
+      ).map((el) => ({ top: el.offsetTop, id: el.getAttribute("id") }));
+    };
+
+    const actualizarNavbar = () => {
+      ticking = false;
+      setScrolled(window.scrollY > 20);
 
       if (secciones.length === 0) {
         return;
@@ -129,19 +139,19 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
 
       let seccionActual = secciones[0];
 
-      secciones.forEach((seccion) => {
-        const inicio = seccion.offsetTop;
-
-        if (inicio <= puntoDeteccion) {
+      for (const seccion of secciones) {
+        if (seccion.top <= puntoDeteccion) {
           seccionActual = seccion;
+        } else {
+          break;
         }
-      });
+      }
 
       if (!seccionActual) {
         return;
       }
 
-      const id = seccionActual.getAttribute("id");
+      const id = seccionActual.id;
 
       if (id === "equipo" || id === "staff") {
         setSeccionActiva("staff");
@@ -150,31 +160,29 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
       }
     };
 
+    // Un solo cálculo por frame: el scroll en mobile dispara decenas de
+    // eventos por segundo y cada uno tocaba el layout.
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(actualizarNavbar);
+      }
+    };
+
+    const onResize = () => {
+      medirSecciones();
+      actualizarNavbar();
+    };
+
+    medirSecciones();
     actualizarNavbar();
 
-    window.addEventListener(
-      "scroll",
-      actualizarNavbar,
-      {
-        passive: true,
-      }
-    );
-
-    window.addEventListener(
-      "resize",
-      actualizarNavbar
-    );
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
 
     return () => {
-      window.removeEventListener(
-        "scroll",
-        actualizarNavbar
-      );
-
-      window.removeEventListener(
-        "resize",
-        actualizarNavbar
-      );
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 

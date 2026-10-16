@@ -41,6 +41,9 @@ const securityHeaders = [
 
 const nextConfig = {
   experimental: {
+    // Achica el JS que baja al celu/tablet: importa solo el icono/componente
+    // usado en vez del paquete entero.
+    optimizePackageImports: ["lucide-react", "framer-motion"],
     serverActions: {
       // Límite de Server Actions: 1MB por defecto. Las fotos llegan hasta
       // 4MB (+~20KB de multipart), así que apenas por encima.

@@ -96,7 +96,9 @@ const AlquilerModulos = () => {
                   src="/nosotros.png"
                   alt="Espacios de CRYBE"
                   loading="lazy"
-                  className="h-32 w-full rounded-[16px] object-cover sm:h-[180px] lg:h-[220px]"
+                  decoding="async"
+                  sizes="(max-width: 768px) 100vw, 560px"
+                  className="h-32 w-full rounded-[16px] bg-[#EAF4FB] object-cover sm:h-[180px] lg:h-[220px]"
                 />
               </div>
               <div className="mt-2.5 sm:mt-4">

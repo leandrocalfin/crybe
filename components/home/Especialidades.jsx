@@ -89,7 +89,10 @@ const Especialidades = ({ items, titulo, descripcion }) => {
                   src={esp.imagen}
                   alt={esp.nombre}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  decoding="async"
+                  draggable={false}
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 285px"
+                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 will-change-auto"
                 />
                 {/* Título siempre visible abajo izquierda */}
                 <div className="absolute bottom-4 left-0 bg-black/60 px-2 py-1 transition-opacity duration-300 group-hover:opacity-0 sm:bottom-6 sm:px-3 sm:py-1.5">

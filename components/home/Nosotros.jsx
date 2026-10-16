@@ -87,8 +87,9 @@ const Nosotros = ({ titulo, parrafos, items }) => {
         background: "#FAFBFF",
       }}
     >
-      {/* GRADIENTES LATERALES SUAVES */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+      {/* GRADIENTES LATERALES SUAVES — solo tablet/desktop: el blur de 100px+
+          en mobile traba el scroll y no se nota sobre el fondo claro */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 hidden sm:block">
         <div className="absolute -left-28 top-1/3 h-[380px] w-[380px] rounded-full bg-[#CDE8F7]/50 blur-[110px]" />
         <div className="absolute -right-28 top-1/4 h-[420px] w-[420px] rounded-full bg-[#D8EFFC]/60 blur-[120px]" />
         <div className="absolute left-1/2 top-0 h-[200px] w-[600px] -translate-x-1/2 rounded-full bg-[#EAF6FD]/70 blur-[100px]" />
@@ -99,7 +100,11 @@ const Nosotros = ({ titulo, parrafos, items }) => {
         <img
           src="/marcaAgua.png"
           alt=""
-          className="w-[min(90vw,700px)] opacity-[0.06] select-none"
+          loading="lazy"
+          decoding="async"
+          width={700}
+          height={700}
+          className="h-auto w-[min(90vw,700px)] opacity-[0.06] select-none"
           draggable={false}
         />
       </div>

@@ -24,26 +24,35 @@ const Hero = ({ slides }) => {
   const descripcionSinViuda = slide.descripcion.replace(/ (\S+)$/, " $1");
 
   useEffect(() => {
+    if (lista.length <= 1) return;
     const intervalo = setInterval(() => {
-      setActual((prev) =>
-        prev === lista.length - 1 ? 0 : prev + 1
-      );
+      setActual((prev) => (prev === lista.length - 1 ? 0 : prev + 1));
     }, 5000);
 
     return () => clearInterval(intervalo);
-  }, []);
+  }, [lista.length]);
 
-  // Precarga la imagen del siguiente slide para que el crossfade sea fluido
+  // Precarga la imagen del siguiente slide para que el crossfade sea fluido.
+  // Solo precarga (no renderiza): antes se montaban DOS carruseles a la vez
+  // (desktop + mobile, uno oculto con CSS pero igual animando) y cada uno con
+  // zoom continuo de 8s. Eso mantenía la GPU trabajando siempre y en tablet
+  // se arrastraba todo el scroll.
   useEffect(() => {
+    if (lista.length <= 1) return;
     const siguiente = lista[(actual + 1) % lista.length];
+    if (!siguiente?.imagen) return;
     const img = new Image();
+    img.decoding = "async";
     img.src = siguiente.imagen;
-  }, [actual]);
+  }, [actual, lista]);
 
   // Precarga al montar la primera imagen (alocacion rápida del primer render)
   useEffect(() => {
+    if (!lista[0]?.imagen) return;
     const img = new Image();
+    img.decoding = "async";
     img.src = lista[0].imagen;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -52,31 +61,27 @@ const Hero = ({ slides }) => {
       data-navbar-color="#F4F8FB"
       className="relative flex min-h-[100svh] flex-col overflow-hidden max-lg:pt-[124px] lg:pt-[170px] max-lg:bg-[#F4F8FB] max-lg:min-h-0"
     >
-      <div className="absolute inset-0 max-lg:hidden">
-        {/* FOTOS */}
+      {/* FONDO — una sola capa para todos los breakpoints. Antes había dos
+          (desktop + mobile) montadas a la vez con crossfade y zoom continuo
+          cada una: doble descarga y doble animación permanente. La posición
+          del encuadre se ajusta solo con CSS.
+          En mobile/tablet arranca DEBAJO del navbar (como antes): si la foto
+          sigue hasta arriba se nota el corte de tono contra el navbar. */}
+      <div className="absolute inset-0 max-lg:top-[124px]">
         <AnimatePresence mode="sync">
-          <motion.div
+          <motion.img
             key={slide.id}
+            src={slide.imagen}
+            alt={slide.nombre}
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.2 }}
-            className="absolute inset-0 will-change-opacity"
-          >
-            <motion.img
-              src={slide.imagen}
-              alt={slide.nombre}
-              loading="eager"
-              fetchPriority="high"
-              initial={{ scale: 1 }}
-              animate={{ scale: 1.035 }}
-              transition={{
-                duration: 8,
-                ease: "linear",
-              }}
-              className="h-full w-full object-cover object-[50%_35%] sm:object-[50%_20%] md:object-center"
-            />
-          </motion.div>
+            transition={{ duration: 0.9 }}
+            className="absolute inset-0 h-full w-full object-cover object-[50%_20%] md:object-[50%_35%] lg:object-[50%_35%] xl:object-[50%_20%] 2xl:object-center"
+          />
         </AnimatePresence>
 
         {/* OVERLAY — texto legible a la izquierda, imagen nítida a la derecha */}
@@ -89,35 +94,21 @@ const Hero = ({ slides }) => {
           }}
         />
 
-        {/* GLOW solo a la izquierda */}
-        <div className="absolute -left-24 top-1/4 h-[320px] w-[320px] rounded-full bg-[#E6D9F7]/35 blur-3xl sm:-left-16" />
+        {/* GLOW solo en desktop: el blur grande fijo es de lo más caro en GPU móvil */}
+        <div className="absolute -left-24 top-1/4 hidden h-[320px] w-[320px] rounded-full bg-[#E6D9F7]/35 blur-3xl sm:-left-16 lg:block" />
       </div>
 
       {/* CONTENIDO — en mobile: imagen de fondo + texto superpuesto; tablet/desktop: texto a la izquierda */}
       <div className="relative z-10 mx-auto flex w-full max-w-[1500px] flex-1 flex-col px-4 py-8 sm:px-6 sm:py-10 md:px-12 lg:items-center lg:justify-center lg:px-20 xl:px-24 max-lg:flex-none max-lg:h-[62vh] max-lg:min-h-[330px] max-lg:justify-start max-lg:py-4">
-        {/* IMAGEN MOBILE — fondo del hero, ancho completo bajo el navbar */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden lg:hidden">
-          <AnimatePresence mode="sync">
-            <motion.img
-              key={slide.id}
-              src={slide.imagen}
-              alt={slide.nombre}
-              loading="eager"
-              fetchPriority="high"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.9 }}
-              className="absolute inset-0 h-full w-full object-cover object-[50%_20%] will-change-opacity"
-            />
-          </AnimatePresence>
-<div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[16%] bg-gradient-to-t from-[#f2f3ff] to-transparent" />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-white/25 via-white/10 to-transparent" />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[24%] bg-gradient-to-t from-white/25 via-white/10 to-transparent" />
+        {/* VELOS solo en mobile para fundir la foto con el fondo */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden lg:hidden">
+          <div className="absolute inset-x-0 bottom-0 h-[16%] bg-gradient-to-t from-[#f2f3ff] to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-white/25 via-white/10 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-[24%] bg-gradient-to-t from-white/25 via-white/10 to-transparent" />
           {/* Este llega hasta la mitad de la foto y con from-white/55 dejaba el título
               embargado: el texto se perdía contra ese blanco. Acortado a h-[16%]
               y más suave, cubre solo el navbar y deja el hero limpio. */}
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[16%] bg-gradient-to-b from-white/45 via-white/15 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-[16%] bg-gradient-to-b from-white/45 via-white/15 to-transparent" />
         </div>
 
         {/* TEXTO + BOTONES */}
