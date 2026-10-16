@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Propuesta Sitio Web — Centro CRYBE — 2026</title>
+<!--
+  Cómo guardar como PDF:
+  1. Abrir este archivo en Chrome/Edge.
+  2. Ctrl+P → Destino: "Guardar como PDF".
+  3. Márgenes: Predeterminados · Gráficos de fondo: ACTIVADO.
+  Ambos documentos salen en un solo PDF.
+-->
+<style>
+  :root {
+    --navy: #0C1B2A;          /* fondo oscuro portada */
+    --navy-2: #14304B;
+    --azul: #123A7A;          /* títulos */
+    --azul-vivo: #2E6BF0;     /* subrayados / acentos */
+    --texto: #374151;
+    --texto-claro: #9FB3C8;
+    --linea: #D9E2EC;
+    --stripe: #F5F8FC;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    color: var(--texto);
+    font-size: 11pt;
+    line-height: 1.65;
+    margin: 0;
+    background: #fff;
+  }
+
+  @page { size: A4; margin: 16mm 14mm; }
+
+  /* ============================ PORTADA ============================ */
+  .portada {
+    width: 210mm;
+    margin: -16mm -14mm 0;
+    padding: 14mm 17.5mm 10mm;
+    background:
+      radial-gradient(ellipse at 50% 0%, #1E3E5F 0%, #101F33 48%, #060D16 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .portada .logo-dev {
+    width: 72px;
+    height: auto;
+    display: block;
+    margin-bottom: 6mm;
+  }
+
+  .portada h1 {
+    font-size: 24pt;
+    line-height: 1.15;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 2mm;
+  }
+  .portada .sub {
+    font-size: 11.5pt;
+    color: var(--texto-claro);
+    margin: 0;
+    font-weight: 400;
+  }
+
+  .portada hr {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, .35);
+    width: 100%;
+    margin: 6mm 0 5mm;
+  }
+
+  .portada .info-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8mm;
+    width: 100%;
+    text-align: left;
+  }
+  .portada .info-row .col:nth-child(2) { text-align: center; }
+  .portada .info-row .col:nth-child(3) { text-align: right; }
+  .portada .info-row .etiqueta {
+    display: block;
+    font-size: 11pt;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5mm;
+  }
+  .portada .info-row .valor {
+    font-size: 10.5pt;
+    color: var(--texto-claro);
+  }
+
+  /* ======================= DOCUMENTO ÚNICO ======================= */
+  .portada + .doc { page-break-before: avoid; }
+
+  /* ======================= CUERPO ======================= */
+  h2 {
+    font-size: 15pt;
+    font-weight: 700;
+    color: var(--azul);
+    margin: 10mm 0 3.5mm;
+    padding-bottom: 2mm;
+    border-bottom: 3px solid var(--azul-vivo);
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: #111827;
+    margin: 5.5mm 0 2mm;
+    page-break-after: avoid;
+  }
+  p { margin: 0 0 3.5mm; text-align: justify; }
+  ul { margin: 0 0 3.5mm; padding-left: 6mm; }
+  li { margin-bottom: 1.5mm; }
+  strong { color: #111827; }
+
+  .destacado {
+    background: #EEF4FF;
+    border-left: 4px solid var(--azul-vivo);
+    border-radius: 0 8px 8px 0;
+    padding: 4mm 5mm;
+    margin: 4.5mm 0;
+    page-break-inside: avoid;
+  }
+  .destacado p { margin: 0; }
+
+  .cita {
+    background: #FFF7E8;
+    border-left: 4px solid #E0A800;
+    border-radius: 0 8px 8px 0;
+    padding: 4mm 5mm;
+    margin: 4.5mm 0;
+    font-size: 10.5pt;
+    page-break-inside: avoid;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 3.5mm 0 5.5mm;
+    font-size: 10.5pt;
+  }
+  th {
+    background: var(--azul);
+    color: #fff;
+    text-align: left;
+    padding: 2.8mm 3mm;
+    font-weight: 700;
+    font-size: 10pt;
+  }
+  td {
+    border-bottom: 1px solid var(--linea);
+    padding: 2.8mm 3mm;
+    vertical-align: top;
+    color: var(--texto);
+  }
+  tr { page-break-inside: avoid; }
+  tbody tr:nth-child(even) { background: var(--stripe); }
+  td.num { text-align: right; white-space: nowrap; }
+
+  .lista-check { list-style: none; padding-left: 0; }
+  .lista-check li { padding-left: 7mm; position: relative; margin-bottom: 2mm; }
+  .lista-check li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--azul-vivo);
+    font-weight: 700;
+  }
+
+  .total {
+    background: linear-gradient(135deg, #14304B 0%, var(--navy) 100%);
+    color: #fff;
+    border-radius: 10px;
+    padding: 5mm;
+    text-align: center;
+    margin: 6mm 0;
+    page-break-inside: avoid;
+  }
+  .total .etiqueta {
+    font-size: 9.5pt;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--texto-claro);
+  }
+  .total .monto { font-size: 22pt; font-weight: 700; display: block; margin-top: 1.5mm; }
+
+  .contacto-final {
+    margin-top: 9mm;
+    padding-top: 4.5mm;
+    border-top: 2px solid var(--linea);
+    font-size: 10.5pt;
+    color: var(--texto);
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .contacto-final strong { color: var(--azul); }
+
+  .nota-pie { font-size: 9.5pt; color: #6B7280; font-style: italic; }
+
+  /* Imagen responsiva (punto 4) */
+  .img-resp {
+    margin: 4mm 0 6mm;
+    page-break-inside: avoid;
+  }
+  .img-resp img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+  }
+  .img-resp figcaption {
+    text-align: center;
+    color: #5B6B7F;
+    font-size: 9.5pt;
+    font-style: italic;
+    margin-top: 2.5mm;
+  }
+
+  .lienzo { max-width: 175mm; margin: 0 auto; }
+
+  @media screen {
+    body { background: #E9EEF4; padding: 24px 16px; }
+    .portada { width: auto; max-width: 900px; margin: 0 auto; padding: 48px 56px 36px; border-radius: 12px 12px 0 0; box-shadow: 0 8px 40px rgba(12, 27, 42, .35); }
+    .portada + .doc { margin-top: 0; border-radius: 0 0 12px 12px; }
+    .doc, .lienzo { background: #fff; }
+    .doc { max-width: 900px; margin: 24px auto; padding: 10mm 14mm; border-radius: 12px; }
+    .portada + .doc { margin-top: 0; }
+  }
+
+  @media print {
+    body { font-size: 10.5pt; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================ PORTADA ============================ -->
+<section class="portada">
+  <img class="logo-dev" src="LOGO_DEV.png" alt="Leandro Calfin" />
+
+  <h1>Propuesta de Sitio Web Institucional</h1>
+  <p class="sub">Diseño, desarrollo y puesta en marcha de su sitio web profesional</p>
+
+  <hr />
+
+  <div class="info-row">
+    <div class="col">
+      <span class="etiqueta">Preparado para</span>
+      <span class="valor">Centro CRYBE</span>
+    </div>
+    <div class="col">
+      <span class="etiqueta">Presentado por</span>
+      <span class="valor">Leandro Calfin · Desarrollador de Software</span>
+    </div>
+    <div class="col">
+      <span class="etiqueta">Fecha</span>
+      <span class="valor">29/09/2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= DOCUMENTO ÚNICO ======================= -->
+<article class="doc lienzo">
+
+  <h2>1. Presentación</h2>
+  <p>
+    El presente documento describe la propuesta de diseño y desarrollo del sitio web institucional
+    para el <strong>Centro CRYBE</strong>, centro de salud ubicado en General Roca, Río Negro, dedicado
+    a la atención en psicología, psiquiatría, fonoaudiología, psicopedagogía, kinesiología y psicomotricidad.
+  </p>
+  <p>
+    El objetivo es brindarle al centro un sitio web profesional, moderno y fácil de administrar, que refleje
+    la seriedad y el trabajo de la marca, permita dar a conocer sus especialidades y equipo, facilite la
+    consulta de potenciales pacientes y visibilice la oferta de alquiler de módulos para profesionales de la salud.
+  </p>
+
+  <h2>2. Objetivos del sitio</h2>
+  <h3>¿Para qué?</h3>
+  <ul>
+    <li>Dar a conocer el centro, sus especialidades, su equipo y su trayectoria en un espacio propio y profesional.</li>
+    <li>Ofrecer información clara y siempre actualizada: profesionales, días y horarios de atención, novedades y recursos.</li>
+    <li>Recibir consultas de manera simple: formulario de contacto y WhatsApp.</li>
+    <li>Promocionar el alquiler de consultorios (módulos) y la incorporación de nuevos profesionales al staff.</li>
+    <li>Aparecer correctamente en Google cuando busquen el centro, sus especialidades o sus profesionales.</li>
+    <li>Cargar rápido y verse bien en celulares, tablets y computadoras.</li>
+    <li>Transmitir confianza a pacientes actuales y potenciales.</li>
+  </ul>
+  <h3>¿A quién va dirigido?</h3>
+  <ul>
+    <li>Pacientes actuales y potenciales del centro.</li>
+    <li>Profesionales de la salud interesados en alquiler de módulos o en sumarse al equipo.</li>
+    <li>Cualquier persona que necesite conocer las especialidades, la ubicación o cómo contactar al centro.</li>
+  </ul>
+
+  <h2>3. Estructura del sitio</h2>
+  <table>
+    <thead>
+      <tr><th style="width:32%">Sección</th><th>Contenido</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Inicio</strong></td>
+        <td>Presentación del centro con carrusel destacado por especialidad (Psicología, Psiquiatría, Fonoaudiología, Psicopedagogía, Kinesiología y Psicomotricidad), accesos rápidos y llamados a la acción.</td>
+      </tr>
+      <tr>
+        <td><strong>Nosotros</strong></td>
+        <td>Descripción de quiénes somos, trayectoria y pilares del centro.</td>
+      </tr>
+      <tr>
+        <td><strong>Especialidades</strong></td>
+        <td>Tarjetas con las especialidades ofrecidas, cada una con su título, imagen y descripción.</td>
+      </tr>
+      <tr>
+        <td><strong>Equipo</strong></td>
+        <td>Fichas de los profesionales con foto, matrícula, formación, áreas de trabajo, modalidad de atención y días/horarios. Cada profesional cuenta con página propia con URL indexable.</td>
+      </tr>
+      <tr>
+        <td><strong>Alquiler de módulos</strong></td>
+        <td>Infraestructura y red para profesionales: consultorios equipados, habilitación sanitaria, beneficios del staff y consulta de disponibilidad.</td>
+      </tr>
+      <tr>
+        <td><strong>Novedades y recursos</strong></td>
+        <td>Publicaciones y recursos para la comunidad, administrables desde el panel.</td>
+      </tr>
+      <tr>
+        <td><strong>Contacto</strong></td>
+        <td>Formulario de consulta, información de la sede (dirección, horarios, teléfono), mapa interactivo, redes sociales y acceso directo a WhatsApp.</td>
+      </tr>
+      <tr>
+        <td><strong>Panel de administración</strong></td>
+        <td>Todo el contenido del sitio es administrable desde un panel privado: textos, imágenes, especialidades, equipo, novedades, datos de contacto y redes.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="nota-pie">* Las secciones pueden ajustarse según las necesidades reales del centro.</p>
+
+  <h3>Vista previa</h3>
+  <p><a href="https://res.cloudinary.com/onoaigok/image/upload/v1790630774/localhost2_full1.jpg">Ampliar vista previa del sitio →</a></p>
+
+  <h2>4. Funcionalidades</h2>
+
+  <h3>Diseño responsivo</h3>
+  <p>El sitio se adapta correctamente a celulares, tablets y computadoras, brindando una buena experiencia en cualquier dispositivo.</p>
+
+  <figure class="img-resp">
+    <img src="responsive-crybe.png" alt="Vista adaptada a computadora, tablet y celular - Sitio CRYBE" />
+    <figcaption>Vista adaptada a computadora, tablet y celular.</figcaption>
+  </figure>
+
+  <h3>Panel de administración</h3>
+  <p>
+    El sitio contará con un área privada de administración, protegida mediante autenticación, desde la que se
+    podrá gestionar el contenido sin necesidad de modificar código. Incluye:
+  </p>
+  <ul class="lista-check">
+    <li><strong>Inicio:</strong> imágenes, títulos y subtítulos del carrusel de portada.</li>
+    <li><strong>Nosotros:</strong> título, descripción e ítems de la sección.</li>
+    <li><strong>Especialidades:</strong> tarjetas con nombre, imagen y descripción.</li>
+    <li><strong>Equipo:</strong> profesionales: datos, fotos, formación, horarios y visibilidad en el sitio (alta, edición y baja).</li>
+    <li><strong>Novedades y recursos:</strong> publicaciones del blog (alta, edición y borrado).</li>
+    <li><strong>Bandeja de entrada:</strong> mensajes recibidos desde el formulario de contacto, con estado de leído/no leído.</li>
+    <li><strong>Datos y redes:</strong> teléfonos, email, redes sociales, dirección, horarios y contraseña de acceso.</li>
+  </ul>
+  <div class="destacado">
+    <p>
+      Los cambios realizados en el panel se publican automáticamente en el sitio en pocos minutos, sin intervención técnica.
+    </p>
+  </div>
+
+  <h3>Formulario de contacto</h3>
+  <p>
+    Los visitantes podrán enviar consultas directamente desde el sitio (consulta clínica, alquiler de módulos,
+    incorporación al equipo o turnos). Los mensajes quedan registrados en la <strong>bandeja de entrada del panel
+    de administración</strong>, con validación en servidor y protección anti-robot. El formulario incluirá un
+    aviso visible pidiendo no enviar información clínica detallada.
+  </p>
+
+  <h3>Botón de WhatsApp</h3>
+  <p>
+    Acceso directo al número de WhatsApp del centro con mensaje predefinido, facilitando el contacto inmediato
+    desde cualquier dispositivo.
+  </p>
+
+  <h3>Fichas de profesionales</h3>
+  <p>
+    Cada profesional del equipo cuenta con una página propia (URL individual) con su formación, áreas de trabajo,
+    modalidad de atención y contacto, facilitando su difusión y posicionamiento en buscadores.
+  </p>
+
+  <h3>Optimización de velocidad</h3>
+  <p>El sitio está desarrollado para cargar rápido, con imágenes optimizadas y contenido servido desde infraestructura global.</p>
+
+  <h3>Posicionamiento en buscadores (SEO inicial)</h3>
+  <p>
+    La base para que Google lo encuentre y lo muestre bien: títulos y descripciones de cada página,
+    URL propia por profesional, sitio rápido y adaptable a celular, y alta en buscadores.
+    Se hace una vez, al publicar.
+  </p>
+
+  <h3>Estadísticas de visitas</h3>
+  <p>
+    El sitio se entrega con la medición de visitas configurada y lista para usar: cantidad de visitantes,
+    páginas más consultadas y dispositivos utilizados. Sin costo adicional.
+  </p>
+
+  <h2>5. Diseño</h2>
+  <ul>
+    <li>Estética acorde a la identidad del centro y a su rubro: seria, limpia, cálida y confiable.</li>
+    <li>Uso de colores institucionales, tipografía legible y un orden visual claro.</li>
+    <li>Animaciones sutiles que acompañan la navegación sin afectar la performance.</li>
+    <li>Las imágenes y el logo podrán ser aportados por el centro o coordinados en conjunto.</li>
+    <li>Se incluyen hasta 2 rondas de ajustes de diseño; las rondas adicionales se cotizan por separado.</li>
+  </ul>
+
+  <h2>6. Documentación técnica de respaldo</h2>
+  <ul>
+    <li><strong>Manual del administrador:</strong> guía paso a paso para que el centro edite su contenido (títulos, imágenes, profesionales, publicaciones, datos de contacto).</li>
+    <li><strong>Registro de la configuración técnica</strong> del sitio y sus servicios.</li>
+  </ul>
+
+  <h2>7. Privacidad y tratamiento de datos</h2>
+  <p>
+    El sitio incorporará los avisos y mecanismos necesarios para informar al usuario cuando se recopilen datos
+    mediante los formularios de contacto. Dado que el sitio incluye medición de visitas, también se informará
+    sobre el uso de cookies de medición. Se incluirá una Política de Privacidad y los avisos
+    correspondientes tomando como referencia la normativa aplicable. La validación jurídica definitiva de dichos
+    textos corresponde al cliente.
+  </p>
+
+  <h2>8. Propiedad y titularidad</h2>
+  <p>
+    El dominio y las cuentas utilizadas específicamente para el funcionamiento del sitio serán registrados a
+    nombre del Centro CRYBE, siempre que el proveedor correspondiente lo permita. El centro conservará el
+    control y acceso a los servicios asociados al proyecto y el desarrollador contará con los permisos necesarios
+    para configurar y administrar dichos servicios.
+  </p>
+  <p>
+    Una vez abonado el importe total del desarrollo, el cliente tendrá acceso al código fuente desarrollado
+    específicamente para el proyecto y al repositorio correspondiente. El centro podrá continuar trabajando con
+    el desarrollador, administrar sus servicios de manera independiente o contratar a otro profesional en el futuro.
+  </p>
+
+  <h2>9. Alcance — Qué NO incluye / costos adicionales</h2>
+  <p>Para evitar malentendidos, se aclara que los siguientes puntos no están incluidos en esta propuesta y, en caso de requerirse, podrán cotizarse por separado:</p>
+  <ul>
+    <li>Contenidos, secciones o funcionalidades no previstos en este documento.</li>
+    <li>Diseños adicionales o rediseños mayores posteriores a la aprobación del diseño.</li>
+    <li>Integraciones con sistemas externos (agenda online, telemedicina, facturación, gestión interna, etc.).</li>
+    <li>Modificaciones solicitadas posteriores al período de garantía de 60 días.</li>
+    <li>Licencias o servicios de terceros no contemplados inicialmente.</li>
+    <li>Servicios de marketing digital, gestión de campañas publicitarias o posicionamiento SEO avanzado y seguimiento continuo.</li>
+  </ul>
+
+  <h2>10. Garantía y soporte post-entrega</h2>
+  <p>
+    Se incluye soporte técnico gratuito durante los primeros <strong>60 días</strong> posteriores a la publicación
+    del sitio. Durante ese período se corregirán sin costo los errores atribuibles al desarrollo y se resolverán
+    dudas relacionadas con el uso del panel de administración. Las nuevas funcionalidades, modificaciones de
+    diseño solicitadas posteriormente o cambios de alcance no se consideran errores y podrán cotizarse por separado.
+  </p>
+  <div class="cita">
+    <strong>Sin plan de mantenimiento mensual:</strong> pasados los 60 días de garantía, el centro administra el
+    contenido de forma autónoma mediante el panel. Las intervenciones técnicas podrán solicitarse a requerimiento y
+    serán cotizadas individualmente.
+  </div>
+
+  <h2>11. Entregables del proyecto</h2>
+  <p>Al finalizar el proyecto se entrega:</p>
+  <ul class="lista-check">
+    <li>Sitio web publicado y operativo.</li>
+    <li>Panel de administración.</li>
+    <li>Base de datos configurada (donde se guarda el contenido del sitio).</li>
+    <li>Dominio configurado (la dirección del sitio en internet).</li>
+    <li>Certificado SSL/HTTPS (la conexión segura del sitio).</li>
+    <li>Formularios y canales de contacto configurados.</li>
+    <li>Código fuente del proyecto y repositorio.</li>
+    <li>Credenciales/cuentas correspondientes al cliente.</li>
+    <li>Manual de administración.</li>
+    <li>Documentación técnica básica.</li>
+    <li>Configuración inicial de herramientas de estadísticas y presencia en buscadores.</li>
+    <li>Capacitación inicial para el uso del panel de administración.</li>
+  </ul>
+
+  <h2>12. Servicios hosting y dominio</h2>
+  <p>
+    El hosting es el espacio donde vive el sitio y lo mantiene disponible en internet las 24 horas. Existen
+    varias opciones en el mercado, pero se recomienda contratarlo en <a href="https://www.hostinger.com/ar">Hostinger</a>,
+    plan <strong>Unlimited</strong>. Según el plazo contratado, el precio varía:
+  </p>
+  <table>
+    <thead>
+      <tr><th style="width:34%">Plazo</th><th style="width:33%; text-align:right">Costo mensual</th><th style="width:33%; text-align:right">Total</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>12 meses</td><td class="num">ARS 7.499 / mes</td><td class="num">ARS 89.988</td></tr>
+      <tr><td>24 meses</td><td class="num">ARS 6.499 / mes</td><td class="num">ARS 155.976</td></tr>
+      <tr><td>48 meses</td><td class="num">ARS 5.399 / mes</td><td class="num">ARS 259.152</td></tr>
+    </tbody>
+  </table>
+  <div class="destacado">
+    <p>
+      Al renovar, el precio del hosting aumenta de forma considerable: a la fecha de esta propuesta, la
+      renovación es de ARS 21.999 por mes (ARS 263.988 por año). Es por eso que elegir el plazo de 48 meses
+      sigue siendo la mejor opción: se abonan cuatro años completos por ARS 259.152, un monto incluso menor
+      al de un solo año de renovación.
+    </p>
+  </div>
+  <p>
+    Con la contratación del hosting, el dominio (la dirección del sitio, por ejemplo <strong>centrocrybe.com</strong>)
+    viene incluido gratis por un año, junto con otros servicios como el certificado de seguridad (SSL).
+    El dominio es siempre anual y su renovación tiene un costo aproximado de entre USD 8 y USD 15 al año.
+    Tanto el dominio como el hosting quedarán registrados a nombre del centro.
+  </p>
+  <p>
+    Durante el desarrollo, el sitio se publica en un entorno de prueba para que el centro pueda
+    revisarlo y aprobarlo antes del lanzamiento. Este entorno no tiene costo y es temporal: se retira al publicar
+    el sitio definitivo.
+  </p>
+
+  <h2>13. Honorarios profesionales</h2>
+  <p>
+    Los honorarios corresponden al trabajo profesional de diseño, desarrollo, configuración y puesta en
+    funcionamiento del proyecto. El dominio y el hosting serán registrados a nombre del cliente y abonados
+    directamente por el centro al proveedor correspondiente.
+  </p>
+  <p><strong>El desarrollo del sitio web incluye:</strong></p>
+  <ul class="lista-check">
+    <li>Diseño y maquetación del sitio adaptable a computadoras, tablets y celulares.</li>
+    <li>Desarrollo de las funcionalidades previstas en la propuesta.</li>
+    <li>Panel de administración con todas sus secciones.</li>
+    <li>Integración del formulario de contacto, bandeja de entrada y WhatsApp.</li>
+    <li>Fichas públicas de profesionales con URL propia.</li>
+    <li>Configuración de la base de datos del sitio.</li>
+    <li>Configuración del dominio y certificado SSL/HTTPS.</li>
+    <li>Protección anti-spam del formulario.</li>
+    <li>Pruebas, correcciones y publicación.</li>
+    <li>Documentación y capacitación inicial para el uso del panel.</li>
+  </ul>
+
+  <div class="total">
+    <span class="etiqueta">Honorarios por desarrollo — pago único</span>
+    <span class="monto">ARS 350.000</span>
+  </div>
+
+  <h2>14. Condiciones de pago y vigencia</h2>
+  <ul>
+    <li><strong>Honorarios de desarrollo:</strong> 30% de anticipo al inicio y el 70% restante antes de la publicación definitiva.</li>
+    <li><strong>Formas de pago:</strong> transferencia bancaria / otros a acordar.</li>
+    <li><strong>Dominio y hosting:</strong> abonados directamente por el Centro CRYBE al proveedor correspondiente.</li>
+    <li><strong>Vigencia:</strong> los montos y condiciones de esta propuesta tienen una validez de 30 días desde su fecha de emisión (hasta el 29/10/2026).</li>
+    <li><strong>Precios de terceros:</strong> son de referencia y pueden ser modificados por cada proveedor.</li>
+  </ul>
+
+  <h2>15. Próximo paso</h2>
+  <p>
+    En caso de aceptar la propuesta, se firmará un contrato que incluirá los puntos desarrollados en este documento.
+    Luego de la confirmación del alcance y del pago inicial correspondiente, se coordinará el inicio del proyecto.
+    Quedo a disposición para resolver cualquier consulta.
+  </p>
+  <div class="destacado">
+    <p>
+      El sitio se encuentra armado y puede entregarse en las próximas 48 horas para el modo prueba, para que
+      pueda ser revisado y aprobado antes del lanzamiento.
+    </p>
+  </div>
+
+  <div class="contacto-final">
+    <strong>Leandro Calfin</strong> — Desarrollador de Software<br />
+    lean.calfin@gmail.com · +54 351 2259123 · Río Gallegos, Santa Cruz<br />
+    Propuesta de Sitio Web Institucional · Centro CRYBE · 2026
+  </div>
+</article>
+
+</body>
+</html>

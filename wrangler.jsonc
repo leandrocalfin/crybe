@@ -1,0 +1,24 @@
+{
+  // NOTA deploy: las NEXT_PUBLIC_* se incrustan durante el build. Con Workers
+  // Builds (repo conectado) van en la sección de variables de BUILD, no en
+  // las de ejecución (si van solo ahí, el build las incrusta vacías). Con
+  // `npm run deploy` desde tu máquina alcanza con .env.local / entorno local.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "crybe-next",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-15",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "crybe-next"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

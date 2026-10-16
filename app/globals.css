@@ -1,0 +1,293 @@
+@import url("https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;500;600;700&family=League+Spartan:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap");
+
+@import "tailwindcss";
+
+/* ==========================================
+   BREAKPOINTS RESPONSIVE (Tailwind v4)
+   Definí acá los puntos de corte del sitio.
+   Mobile: < 640px · Tablet: 640–1023px · Desktop: >= 1024px
+   ========================================== */
+@theme {
+  --breakpoint-sm: 40rem;   /* 640px — valor por defecto de Tailwind */
+  --breakpoint-md: 48rem;   /* 768px — tablet vertical */
+  --breakpoint-lg: 64rem;   /* 1024px — tablet horizontal / desktop */
+  --breakpoint-xl: 80rem;   /* 1280px */
+  --breakpoint-2xl: 96rem;  /* 1536px */
+
+  /* Paleta panel admin (misma que sitio Psicopedagoga) */
+  --color-lila-50: #faf7ff;
+  --color-lila-100: #f1eaff;
+  --color-lila-200: #ddd0f7;
+  --color-lila-500: #8b76c9;
+  --color-lila-700: #5f4b9e;
+  --color-lila-900: #3d3463;
+  --color-rosa-100: #fde7f1;
+
+  --font-serif-display: "Literata", Georgia, serif;
+}
+
+:root {
+  font-family: "Manrope", sans-serif;
+
+  color: #2b2b2b;
+  background: #ffffff;
+
+  --primary: #2b2b2b;
+  --primary-light: #f1f3f5;
+
+  --secondary: #6b6259;
+  --secondary-light: #f5efe1;
+
+  --tertiary: #6b6259;
+  --tertiary-light: #ede5d3;
+
+  --surface: #ffffff;
+  --surface-cream: #faf8f3;
+  --surface-lavender: #ffffff;
+
+  --acuarela: #ede5d3;
+  --acuarela-suave: #f5efe1;
+  --gris-tarjeta: #f1f3f5;
+
+  --text: #2b2b2b;
+  --text-soft: #5f5f5f;
+  --outline: #e5e0d5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  font-family: "Manrope", sans-serif;
+
+  background: var(--surface);
+  color: var(--text);
+
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================
+   TIPOGRAFÍAS
+========================================== */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "League Spartan", sans-serif;
+}
+
+.font-titulo {
+  font-family: "League Spartan", sans-serif !important;
+}
+
+.font-texto {
+  font-family: "Manrope", sans-serif;
+}
+
+.font-literata {
+  font-family: "Literata", serif;
+}
+
+/* ==========================================
+   ELEMENTOS GENERALES
+========================================== */
+
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Offset para que las secciones no queden tapadas por el navbar sticky */
+  section[id] {
+    scroll-margin-top: 78px;
+  }
+
+  @media (min-width: 1024px) {
+    section[id] {
+      scroll-margin-top: 84px;
+    }
+  }
+}
+
+::selection {
+  background: #d8e5f1;
+  color: #1e3a52;
+}
+
+/* ==========================================
+   WHATSAPP
+========================================== */
+
+@keyframes whatsapp-pulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.65;
+  }
+
+  70% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+
+.whatsapp-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+
+  background-color: rgba(37, 211, 102, 0.35);
+
+  animation: whatsapp-pulse 2.2s ease-out infinite;
+
+  pointer-events: none;
+}
+
+.whatsapp-pulse-1 {
+  animation-delay: 0s;
+}
+
+.whatsapp-pulse-2 {
+  animation-delay: 1.1s;
+}
+
+/* ==========================================
+   MARQUESINA SUPERIOR
+========================================== */
+
+@keyframes crybe-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: crybe-marquee 35s linear infinite;
+}
+
+/* ==========================================
+   RESPONSIVE UTILITIES
+========================================== */
+
+/* Evitar overflow horizontal en móvil */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Ajuste de touch targets mínimos */
+@media (max-width: 768px) {
+  input, select, textarea {
+    min-height: 40px;
+  }
+
+  input:not(#contacto-motivo), select:not(#contacto-motivo), textarea {
+    font-size: 16px !important; /* Evita zoom en iOS */
+  }
+
+  /* El panel admin no es un form público: mantiene la escala de 13px de los
+     inputs de escritorio para que los placeholders no se vean desproporcionados.
+     El 16px anti-zoom de arriba no aplica porque acá no hay zoom de iOS que evitar. */
+  #admin-panel input,
+  #admin-panel select,
+  #admin-panel textarea {
+    font-size: 13px !important;
+  }
+}
+
+/* Motivo de consulta: misma escala visual que el resto del form en móvil.
+   En foco sube a 16px solo para que iOS no haga zoom automático. */
+#contacto-motivo {
+  font-size: 13px;
+}
+#contacto-motivo option {
+  font-size: 13px;
+  background: #ffffff;
+  color: #1f1f1f;
+}
+@media (max-width: 768px) {
+  #contacto-motivo {
+    font-size: 12.5px !important;
+  }
+}
+
+/* Formulario de contacto: texto siempre compacto en móvil, incluso al escribir
+   o elegir motivo (el global de 16px anti-zoom no aplica acá adentro). */
+@media (max-width: 768px) {
+  #contacto input, #contacto select, #contacto textarea,
+  #contacto input:focus, #contacto select:focus, #contacto textarea:focus {
+    font-size: 13px !important;
+  }
+}
+
+/* Reducir animaciones en dispositivos que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar suave en móvil */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+}
+
+/* Ajustes de contenedores para móvil */
+@media (max-width: 640px) {
+  .container-mobile {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* Texto responsive para headings */
+
+/* Espaciado de secciones en móvil */
+
+/* Mejorar legibilidad de texto en móvil */
+@media (max-width: 768px) {
+  p, span, li {
+    line-height: 1.6 !important;
+  }
+}
