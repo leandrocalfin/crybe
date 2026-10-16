@@ -8,9 +8,7 @@ import { z } from "zod";
 import { getSupabaseServer, getAdminUser } from "../../lib/supabaseServer";
 import { ipDeHeaders } from "../../lib/ip";
 import { getSupabaseService } from "../../lib/supabaseService";
-import { verifyTurnstile } from "../actions";
 
-const ESTADOS = ["nuevo", "contactado", "cerrado"];
 const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 const CATEGORIAS = [
   "Psicología",
@@ -464,7 +462,7 @@ export async function loginAdmin(email, password, captchaToken) {
   const ip = ipDeHeaders(h);
   const clave = `login:${createHash("sha256").update(ip).digest("hex").slice(0, 32)}`;
   const svc = getSupabaseService();
-  if (!svc) throw new Error("Falta configuración del servidor.");
+  if (!svc) throw new Error("Falta configuración: service_role.");
   const since = new Date(Date.now() - LOGIN_WINDOW_MS).toISOString();
   // Limpieza oportunista de ventanas vencidas.
   await svc.from("login_attempts").delete().lt("created_at", since);
@@ -480,11 +478,11 @@ export async function loginAdmin(email, password, captchaToken) {
     await svc.from("login_attempts").insert({ clave });
     throw new Error(msg);
   };
-  // Captcha verificado en servidor (si está configurado).
-  const t = await verifyTurnstile(captchaToken || "", ip);
-  if (!t.ok && !t.skipped) await fallar("La verificación anti-bot falló. Intentá de nuevo.");
+  // El captcha lo verifica Supabase Auth (Attack Protection), que es quien
+  // recibe el captchaToken más abajo. No lo verificamos también acá porque
+  // el token de Turnstile es de un solo uso y la segunda comprobación fallaría.
   const sb = await getSupabaseServer();
-  if (!sb) throw new Error("Falta configuración del servidor.");
+  if (!sb) throw new Error("Falta configuración: server (anon).");
   const { data, error } = await sb.auth.signInWithPassword({
     email: parsed.data.email,
     password: parsed.data.password,
