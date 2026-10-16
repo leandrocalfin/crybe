@@ -8,6 +8,7 @@ import { z } from "zod";
 import { getSupabaseServer, getAdminUser } from "../../lib/supabaseServer";
 import { ipDeHeaders } from "../../lib/ip";
 import { getSupabaseService } from "../../lib/supabaseService";
+import { MAX_PALABRAS_DESCRIPCION, contarPalabras } from "../../lib/limites";
 
 const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 const CATEGORIAS = [
@@ -263,6 +264,12 @@ export async function guardarSeccion(raw) {
 
 // Alias anterior (Nosotros lo sigue usando).
 export async function guardarSeccionNosotros(raw) {
+  const palabras = contarPalabras(raw?.descripcion || "");
+  if (palabras > MAX_PALABRAS_DESCRIPCION) {
+    throw new Error(
+      `La descripción tiene ${palabras} palabras y el máximo es ${MAX_PALABRAS_DESCRIPCION}.`,
+    );
+  }
   return guardarSeccion({ ...raw, slug: "nosotros" });
 }
 

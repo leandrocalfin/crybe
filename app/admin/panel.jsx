@@ -193,7 +193,7 @@ function BandejaEntrada({ contactos }) {
   );
 }
 
-export default function Panel({ email, contactos, profesionales, novedades, especialidades, nosotros, ajustes, portadas }) {
+export default function Panel({ contactos, profesionales, novedades, especialidades, nosotros, ajustes, portadas }) {
   const [tab, setTab] = useState("inicio");
 
   // Cierre por inactividad: 5 min sin actividad => logout + aviso en el login.
@@ -228,13 +228,21 @@ export default function Panel({ email, contactos, profesionales, novedades, espe
       <div className="mx-auto grid w-full min-w-0 max-w-6xl flex-1 items-start gap-4 px-4 py-4 sm:px-5 md:grid-cols-[240px_minmax(0,1fr)]">
         {/* SIDEBAR */}
         <nav className="hidden min-w-0 space-y-1.5 self-start rounded-[20px] border border-white/60 bg-white/55 p-2.5 shadow-[0_8px_32px_rgba(61,52,99,0.08),0_2px_8px_rgba(61,52,99,0.06)] backdrop-blur-xl md:block">
-          <div className="flex items-center gap-2.5 px-2 pb-2">
+          <div className="relative overflow-hidden rounded-[14px] px-3 pb-3.5 pt-4 text-center">
+            {/* Marca de agua: decorativa, va detrás del texto y no se anuncia. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logoSinFondo.png" alt="CRYBE" className="h-9 w-auto" />
-            <div className="min-w-0">
-              <p className="font-serif-display text-[15px] font-medium leading-tight text-lila-900">Panel CRYBE</p>
-              <p className="truncate text-[10px] text-stone-500">{email}</p>
-            </div>
+            <img
+              src="/logoSinFondo.png"
+              alt=""
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-20 w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.08]"
+            />
+            <h1 className="relative font-serif-display text-[17px] font-semibold leading-[1.15] tracking-tight text-lila-900">
+              Panel de administración
+            </h1>
+            <p className="relative mt-1.5 text-[11.5px] font-semibold leading-snug text-stone-600">
+              Manejá el contenido del sitio
+            </p>
           </div>
           {SECCIONES.map((s) => (
             <button

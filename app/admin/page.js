@@ -96,7 +96,6 @@ export default async function AdminPage() {
         </div>
       )}
       <Panel
-        email={user.email}
         contactos={contactos || []}
         profesionales={profesionales || []}
         novedades={novedades || []}

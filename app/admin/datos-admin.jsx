@@ -16,7 +16,7 @@ const CAMPOS = [
   { clave: "instagram", label: "Instagram (URL)", placeholder: "https://www.instagram.com/..." },
   { clave: "facebook", label: "Facebook (URL, opcional)", placeholder: "https://www.facebook.com/..." },
   { clave: "direccion", label: "Dirección", placeholder: "Tucumán 445, General Roca · Río Negro" },
-  { clave: "direccion_corta", label: "Dirección corta (footer)", placeholder: "Tucuman 445, General Roca" },
+  { clave: "direccion_corta", label: "Dirección corta (pie de página)", placeholder: "Tucuman 445, General Roca" },
   { clave: "mapa", label: "Mapa (búsqueda de Google Maps)", placeholder: "Tucuman 445, General Roca, Rio Negro" },
   { clave: "horario_lv", label: "Horario lunes a viernes", placeholder: "Lunes a Viernes: 08:00 a 20:00 hs" },
   { clave: "horario_sab", label: "Horario sábado", placeholder: "Sábados: 09:00 a 13:00 hs" },
@@ -104,7 +104,7 @@ export default function DatosAdmin({ ajustes }) {
           )}
         </div>
         <div className="px-4 py-4">
-          <FotoField value={avatar} onChange={setAvatar} etiqueta="Se muestra en el botón del navbar" deshabilitado={!editando} />
+          <FotoField value={avatar} onChange={setAvatar} etiqueta="Tu foto, arriba a la derecha" deshabilitado={!editando} />
         </div>
       </div>
 

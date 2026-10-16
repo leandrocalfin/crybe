@@ -553,7 +553,7 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
               >
                 <div className="border-b border-[#F1F3F5] px-4 py-3">
                   <p className="truncate text-[13.5px] font-semibold text-[#111827]">
-                    {mostrarAdminNombre}
+                    {`Bienvenida/o ${mostrarAdminNombre}`}
                   </p>
                   {adminEmail && (
                     <p className="mt-0.5 truncate text-[12px] text-[#6B7280]">
@@ -755,7 +755,7 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
                 >
                   <div className="border-b border-[#F1F3F5] px-4 py-3">
                     <p className="truncate text-[13.5px] font-semibold text-[#111827]">
-                      {mostrarAdminNombre}
+                      {`Bienvenida/o ${mostrarAdminNombre}`}
                     </p>
                     {adminEmail && (
                       <p className="mt-0.5 truncate text-[12px] text-[#6B7280]">

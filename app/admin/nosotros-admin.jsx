@@ -8,6 +8,7 @@ import {
   eliminarNosotrosItem,
 } from "./actions";
 import { ICONOS_NOMBRES, ICONOS_ETIQUETAS, Icono } from "../../lib/iconos";
+import { MAX_PALABRAS_DESCRIPCION, contarPalabras } from "../../lib/limites";
 
 const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[13px] text-[#1F1F1F] outline-none focus:bg-lila-100";
 const labelCls = "mb-1 block text-[11px] font-semibold uppercase tracking-[0.2em] text-lila-500";
@@ -158,6 +159,8 @@ export default function NosotrosAdmin({ seccion, items }) {
   const total = (items || []).length;
   const puedeAgregar = total < MAX_ITEMS;
   const cabCambiada = titulo !== (seccion?.titulo || "") || descripcion !== (seccion?.descripcion || "");
+  const palabras = contarPalabras(descripcion);
+  const excede = palabras > MAX_PALABRAS_DESCRIPCION;
 
   const onGuardarCabecera = () => {
     setMsgCab("");
@@ -197,8 +200,28 @@ export default function NosotrosAdmin({ seccion, items }) {
             <input value={titulo} disabled={!editandoCab} onChange={(e) => setTitulo(e.target.value)} className={`${inputCls} disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500`} />
           </div>
           <div>
-            <label className={labelCls}>Descripción (línea vacía = párrafo nuevo)</label>
-            <textarea value={descripcion} disabled={!editandoCab} onChange={(e) => setDescripcion(e.target.value)} rows={2} className="w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[13px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500" />
+            <div className="flex items-baseline justify-between gap-3">
+              <label className={labelCls}>Descripción (línea vacía = párrafo nuevo)</label>
+              <span
+                className={`shrink-0 text-[11px] font-semibold tabular-nums ${excede ? "text-red-600" : "text-stone-400"}`}
+              >
+                {palabras} / {MAX_PALABRAS_DESCRIPCION} palabras
+              </span>
+            </div>
+            <textarea
+              value={descripcion}
+              disabled={!editandoCab}
+              onChange={(e) => setDescripcion(e.target.value)}
+              rows={10}
+              className={`w-full rounded-xl border bg-white p-2.5 text-[13px] leading-relaxed outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500 ${excede ? "border-red-300" : "border-stone-200"}`}
+            />
+            {excede && (
+              <p className="mt-1 text-[11px] font-semibold text-red-600">
+                Te pasás por {palabras - MAX_PALABRAS_DESCRIPCION}{" "}
+                {palabras - MAX_PALABRAS_DESCRIPCION === 1 ? "palabra" : "palabras"}. Acortá la
+                descripción para poder guardar.
+              </p>
+            )}
           </div>
         </div>
         {msgCab && <p className="mt-2 text-[12px] font-semibold text-stone-600">{msgCab}</p>}
@@ -206,7 +229,7 @@ export default function NosotrosAdmin({ seccion, items }) {
         <div className="mt-3 flex justify-center">
           <button
             type="button"
-            disabled={pendiente || !cabCambiada}
+            disabled={pendiente || !cabCambiada || excede}
             onClick={onGuardarCabecera}
             className="rounded-full bg-emerald-600 px-5 py-2 text-[12px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
           >

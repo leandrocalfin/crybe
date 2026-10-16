@@ -130,7 +130,7 @@ export function EditorPortada({ portada, count, onCerrar, onGuardado }) {
         <div className="absolute inset-0 flex flex-col justify-center p-3">
           <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-lila-700">{nombre || "Nombre"}</p>
           <p className="mt-0.5 text-[13px] font-medium leading-snug text-[#1F1F1F]">
-            {titulo.split("\n")[0] || "Título del hero"}
+            {titulo.split("\n")[0] || "Título de la portada"}
           </p>
         </div>
       </div>
@@ -147,7 +147,7 @@ export function EditorPortada({ portada, count, onCerrar, onGuardado }) {
           />
         </div>
         <div className="sm:col-span-2">
-          <label className={labelCls}>Título (Enter = renglón nuevo en el hero)</label>
+          <label className={labelCls}>Título (cada renglón es una línea de la portada)</label>
           <textarea value={titulo} disabled={!editando} onChange={(e) => setTitulo(e.target.value)} rows={2} className={areaCls} />
         </div>
         <div className="sm:col-span-2">
