@@ -202,9 +202,42 @@ const CarruselArticulo = ({ articulo }) => {
   );
 };
 
+// Paginación: coincide con las columnas de la grilla (lg: 4 columnas,
+// mobile/tablet: 2).
+const POR_PAGINA_DESKTOP = 8;
+const POR_PAGINA_MOVIL = 6;
+const QUERY_DESKTOP = "(min-width: 1024px)";
+
 const Novedades = ({ items }) => {
   const [articulo, setArticulo] = useState(null);
+  const [porPagina, setPorPagina] = useState(POR_PAGINA_MOVIL);
+  const [pagina, setPagina] = useState(1);
   const lista = items?.length ? items : novedades;
+
+  // 8 por página en desktop (4 columnas × 2 filas) y 6 en tablet/mobile
+  // (2 columnas × 3 filas). Arranca en 6 a propósito: el primer render del
+  // cliente tiene que coincidir con el del servidor o Next hydration warns.
+  useEffect(() => {
+    const mq = window.matchMedia(QUERY_DESKTOP);
+    const aplicar = () => setPorPagina(mq.matches ? POR_PAGINA_DESKTOP : POR_PAGINA_MOVIL);
+    aplicar();
+    mq.addEventListener("change", aplicar);
+    return () => mq.removeEventListener("change", aplicar);
+  }, []);
+
+  const totalPaginas = Math.max(1, Math.ceil(lista.length / porPagina));
+  // pagActual recorta el estado: si llegan artículos o cambia el tamaño de
+  // página, el usuario nunca queda en una página que ya no existe.
+  const pagActual = Math.min(pagina, totalPaginas);
+  const visibles = lista.slice((pagActual - 1) * porPagina, pagActual * porPagina);
+
+  const irA = (p) => {
+    setPagina(p);
+    const seccion = document.getElementById("novedades");
+    if (seccion) {
+      window.scrollTo({ top: seccion.getBoundingClientRect().top + window.scrollY - 100, behavior: "smooth" });
+    }
+  };
 
   // Cerrar con Escape y congelar el scroll de fondo
   useEffect(() => {
@@ -252,7 +285,7 @@ const Novedades = ({ items }) => {
 
         {/* ARTÍCULOS */}
         <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
-          {lista.map((novedad, index) => (
+          {visibles.map((novedad, index) => (
             <motion.article
               key={novedad.id}
               onClick={() => setArticulo(novedad)}
@@ -303,9 +336,52 @@ const Novedades = ({ items }) => {
                   Leer artículo completo
                 </button>
               </div>
-            </motion.article>
+</motion.article>
           ))}
         </div>
+
+        {/* ÍNDICE DE PÁGINAS */}
+        {totalPaginas > 1 && (
+          <nav
+            aria-label="Paginación de recursos"
+            className="mt-10 flex flex-wrap items-center justify-center gap-1.5"
+          >
+            <button
+              type="button"
+              onClick={() => irA(pagActual - 1)}
+              disabled={pagActual === 1}
+              className="inline-flex min-h-[40px] items-center gap-1 rounded-full border border-[#D5E0EE] bg-white px-4 text-[12px] font-semibold text-[#0F3A7A] transition hover:bg-[#EAF4FB] disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-white"
+            >
+              <ChevronLeft size={15} /> Anterior
+            </button>
+
+            {Array.from({ length: totalPaginas }, (_, i) => i + 1).map((n) => (
+              <button
+                key={n}
+                type="button"
+                onClick={() => irA(n)}
+                aria-current={n === pagActual ? "page" : undefined}
+                aria-label={`Página ${n}`}
+                className={`inline-flex h-10 min-w-[40px] items-center justify-center rounded-full border px-3 text-[12px] font-semibold transition ${
+                  n === pagActual
+                    ? "border-[#0F3A7A] bg-[#0F3A7A] text-white"
+                    : "border-[#D5E0EE] bg-white text-[#0F3A7A] hover:bg-[#EAF4FB]"
+                }`}
+              >
+                {n}
+              </button>
+            ))}
+
+            <button
+              type="button"
+              onClick={() => irA(pagActual + 1)}
+              disabled={pagActual === totalPaginas}
+              className="inline-flex min-h-[40px] items-center gap-1 rounded-full border border-[#D5E0EE] bg-white px-4 text-[12px] font-semibold text-[#0F3A7A] transition hover:bg-[#EAF4FB] disabled:cursor-not-allowed disabled:opacity-35 disabled:hover:bg-white"
+            >
+              Siguiente <ChevronRight size={15} />
+            </button>
+          </nav>
+        )}
       </div>
 
       {/* MODAL DE LECTURA */}

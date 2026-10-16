@@ -196,9 +196,14 @@ h4 {
    RESPONSIVE UTILITIES
 ========================================== */
 
-/* Evitar overflow horizontal en móvil */
+/* Evitar overflow horizontal en móvil.
+   Importa usar `clip` y no `hidden`: `overflow-x: hidden` en <html> hace que
+   overflow-y passe a computarse como `auto`, convierte al <html> en contenedor
+   de scroll y rompe la propagación del viewport. Con eso la emulación móvil
+   de Chrome calculaba la página más ancha que la ventana y había que recargar
+   varias veces para que cuadrara. `clip` recorta igual sin crear scroll. */
 html, body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Ajuste de touch targets mínimos */

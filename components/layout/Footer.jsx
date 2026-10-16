@@ -59,7 +59,7 @@ const Footer = ({ ajustes }) => {
       <div className="relative mx-auto max-w-[1280px]">
 
         {/* ===== TABLET / DESKTOP: FOOTER COMPLETO ===== */}
-        <div className="hidden sm:block">
+        <div className="hidden md:block">
 
           {/* CONTENIDO PRINCIPAL */}
           <div className="grid gap-4 py-3 sm:py-4 md:grid-cols-[1.4fr_0.7fr_0.9fr] md:gap-5 md:py-3 lg:grid-cols-[1.4fr_0.7fr_0.9fr] lg:gap-6 lg:py-3">
@@ -255,7 +255,7 @@ const Footer = ({ ajustes }) => {
         </div>
 
         {/* ===== MOBILE: FOOTER SIMPLIFICADO ===== */}
-        <div className="sm:hidden">
+        <div className="md:hidden">
 
           {/* IDENTIDAD */}
           <div className="flex flex-col items-center py-6 text-center">

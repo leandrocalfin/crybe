@@ -50,9 +50,9 @@ const Hero = ({ slides }) => {
     <section
       id="inicio"
       data-navbar-color="#F4F8FB"
-      className="relative flex min-h-[100svh] flex-col overflow-hidden pt-[124px] max-sm:bg-[#F4F8FB] sm:bg-transparent sm:pt-[164px] lg:pt-[170px] max-sm:min-h-0"
+      className="relative flex min-h-[100svh] flex-col overflow-hidden max-lg:pt-[124px] lg:pt-[170px] max-lg:bg-[#F4F8FB] max-lg:min-h-0"
     >
-      <div className="absolute inset-0 max-sm:hidden">
+      <div className="absolute inset-0 max-lg:hidden">
         {/* FOTOS */}
         <AnimatePresence mode="sync">
           <motion.div
@@ -94,9 +94,9 @@ const Hero = ({ slides }) => {
       </div>
 
       {/* CONTENIDO — en mobile: imagen de fondo + texto superpuesto; tablet/desktop: texto a la izquierda */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[1500px] flex-1 flex-col px-4 py-8 sm:px-6 sm:py-10 md:px-12 lg:items-center lg:justify-center lg:px-20 xl:px-24 max-sm:flex-none max-sm:h-[62vh] max-sm:min-h-[330px] max-sm:justify-start max-sm:py-4">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1500px] flex-1 flex-col px-4 py-8 sm:px-6 sm:py-10 md:px-12 lg:items-center lg:justify-center lg:px-20 xl:px-24 max-lg:flex-none max-lg:h-[62vh] max-lg:min-h-[330px] max-lg:justify-start max-lg:py-4">
         {/* IMAGEN MOBILE — fondo del hero, ancho completo bajo el navbar */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden sm:hidden">
+        <div className="absolute inset-0 w-full h-full overflow-hidden lg:hidden">
           <AnimatePresence mode="sync">
             <motion.img
               key={slide.id}
@@ -111,14 +111,17 @@ const Hero = ({ slides }) => {
               className="absolute inset-0 h-full w-full object-cover object-[50%_20%] will-change-opacity"
             />
           </AnimatePresence>
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[16%] bg-gradient-to-t from-[#f2f3ff] to-transparent" />
+<div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[16%] bg-gradient-to-t from-[#f2f3ff] to-transparent" />
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[22%] bg-gradient-to-b from-white/25 via-white/10 to-transparent" />
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-[24%] bg-gradient-to-t from-white/25 via-white/10 to-transparent" />
-          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[28%] bg-gradient-to-b from-white/55 via-white/10 to-transparent" />
+          {/* Este llega hasta la mitad de la foto y con from-white/55 dejaba el título
+              embargado: el texto se perdía contra ese blanco. Acortado a h-[16%]
+              y más suave, cubre solo el navbar y deja el hero limpio. */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[16%] bg-gradient-to-b from-white/45 via-white/15 to-transparent" />
         </div>
 
         {/* TEXTO + BOTONES */}
-        <div className="relative flex w-full flex-col items-center justify-center text-center sm:items-start sm:text-left">
+        <div className="relative flex w-full flex-col items-center justify-center text-center lg:items-start lg:text-left">
           <div className="w-full max-w-[800px]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -132,15 +135,15 @@ const Hero = ({ slides }) => {
                 }}
                 className="min-h-[170px] sm:min-h-[250px] md:min-h-[295px]"
               >
-                <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#0F3A7A] [text-shadow:0_1px_8px_rgba(255,255,255,0.9),0_1px_2px_rgba(255,255,255,0.8)] sm:mb-3 sm:text-[14px] md:text-[15px]">
+                <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.16em] text-[#0F3A7A] sm:mb-3 sm:text-[15px] md:text-[15px]">
                   {slide.nombre}
                 </p>
 
-                <h1 className="font-titulo min-h-[2.4em] max-w-[780px] text-[22px] font-bold leading-[1.12] tracking-[-0.02em] text-[#1F1F1F] [text-shadow:0_2px_24px_rgba(255,252,235,0.95),0_1px_3px_rgba(255,255,255,0.9)] sm:text-[36px] sm:leading-[1.1] md:text-[40px] lg:text-[52px] xl:text-[56px] max-sm:max-w-none max-sm:w-full max-sm:min-h-[1.9em]">
+                <h1 className="font-titulo min-h-[2.4em] max-w-[780px] text-[22px] font-bold leading-[1.12] tracking-[-0.02em] text-[#1F1F1F] sm:text-[36px] sm:leading-[1.1] md:text-[40px] lg:text-[52px] xl:text-[56px] max-lg:max-w-none max-lg:w-full max-lg:min-h-[1.9em]">
                   {renderTitulo(slide.titulo)}
                 </h1>
 
-                <p className="mt-3 hidden max-w-[500px] text-[13px] font-medium leading-6 text-[#2B2B2B] [text-shadow:0_1px_12px_rgba(255,255,255,0.95),0_1px_2px_rgba(255,255,255,0.9)] sm:block sm:text-[15px] md:text-base">
+                <p className="mt-3 hidden max-w-[500px] text-[13px] font-medium leading-6 text-[#2B2B2B] lg:block lg:text-[15px] md:text-base">
                   {descripcionSinViuda}
                 </p>
               </motion.div>
@@ -149,8 +152,8 @@ const Hero = ({ slides }) => {
         </div>
 
         {/* BOTONES — abajo de la imagen en mobile */}
-        <div className="relative mt-6 flex w-full flex-col items-center justify-center gap-2.5 sm:flex-row sm:items-center sm:justify-start max-sm:mt-auto max-sm:gap-1.5 max-sm:py-3">
-              <p className="mb-1 max-w-[480px] text-center text-[12px] font-medium leading-5 text-[#2B2B2B] [text-shadow:0_1px_12px_rgba(255,255,255,0.95),0_1px_2px_rgba(255,255,255,0.9)] max-sm:line-clamp-2 max-sm:block sm:hidden">
+        <div className="relative mt-6 flex w-full flex-col items-center justify-center gap-2.5 lg:flex-row lg:items-center lg:justify-start max-lg:mt-auto max-lg:gap-1.5 max-lg:py-3">
+              <p className="mb-1 max-w-[480px] text-center text-[12px] font-medium leading-5 text-[#2B2B2B] max-lg:line-clamp-2 max-lg:block lg:hidden">
                 {descripcionSinViuda}
               </p>
               <a
@@ -170,10 +173,10 @@ const Hero = ({ slides }) => {
                   transition-all duration-300
                   hover:-translate-y-[2px]
                   hover:brightness-110
-                  max-sm:max-w-full max-sm:min-h-8 max-sm:px-3 max-sm:py-1 max-sm:text-[11px]
+                  max-lg:max-w-full max-lg:min-h-8 max-lg:px-3 max-lg:py-1 max-lg:text-[11px]
                 "
               >
-                <CalendarDays size={15} className="max-sm:size-[13px]" />
+                <CalendarDays size={15} className="max-lg:size-[13px]" />
                 Agendar Turno con un Profesional
               </a>
               <a
@@ -190,7 +193,7 @@ const Hero = ({ slides }) => {
                   transition-all duration-300
                   hover:-translate-y-[2px]
                   hover:border-[#0F3A7A]/60 hover:bg-white
-                  max-sm:max-w-full max-sm:min-h-8 max-sm:px-3 max-sm:py-1 max-sm:text-[11px]
+                  max-lg:max-w-full max-lg:min-h-8 max-lg:px-3 max-lg:py-1 max-lg:text-[11px]
                 "
               >
                 Ver especialidades
@@ -209,16 +212,16 @@ const Hero = ({ slides }) => {
                   transition-all duration-300
                   hover:-translate-y-[2px]
                   hover:border-[#0F3A7A]/60 hover:bg-white
-                  max-sm:max-w-full max-sm:min-h-8 max-sm:px-3 max-sm:py-1 max-sm:text-[11px]
+                  max-lg:max-w-full max-lg:min-h-8 max-lg:px-3 max-lg:py-1 max-lg:text-[11px]
                 "
               >
-                <Building2 size={15} className="max-sm:size-[13px]" />
+                <Building2 size={15} className="max-lg:size-[13px]" />
                 Alquiler de Módulos
               </a>
             </div>
 
         {/* INDICADORES FIJOS */}
-        <div className="relative mt-6 flex w-full items-center justify-center gap-1.5 sm:mt-5 sm:justify-start max-sm:mt-3">
+        <div className="relative mt-6 flex w-full items-center justify-center gap-1.5 sm:mt-5 lg:justify-start max-lg:mt-3">
           {lista.map((item, index) => (
             <button
               key={item.id}
