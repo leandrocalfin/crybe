@@ -316,9 +316,9 @@ export async function eliminarNosotrosItem(id) {
 // ---------- AJUSTES (datos y redes) ----------
 
 const AJUSTES_CLAVES = [
-  "whatsapp", "telefono", "email", "instagram", "facebook",
-  "direccion", "direccion_corta", "mapa", "horario_lv", "horario_sab", "avatar",
-];
+    "whatsapp", "telefono", "email", "instagram", "facebook",
+    "mapa", "horario_lv", "horario_sab", "avatar",
+  ];
 
 export async function guardarAjustes(raw) {
   const parsed = z.record(z.string().trim().max(500)).safeParse(raw);

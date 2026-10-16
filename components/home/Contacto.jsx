@@ -28,7 +28,7 @@ const Contacto = ({ ajustes }) => {
   const INSTAGRAM_URL = ajustes?.instagram || INSTAGRAM_DEF;
   const FACEBOOK_URL = ajustes?.facebook || "";
   const EMAIL = ajustes?.email || EMAIL_DEF;
-  const DIRECCION = ajustes?.direccion || "Tucumán 445, General Roca · Río Negro";
+  const DIRECCION = ajustes?.mapa || "Tucuman 445, General Roca, Rio Negro";
   const TELEFONO = ajustes?.telefono || "298 425-4590";
   const HORARIO_LV = ajustes?.horario_lv || "Lunes a Viernes: 08:00 a 20:00 hs";
   const HORARIO_SAB = ajustes?.horario_sab || "Sábados: 09:00 a 13:00 hs";

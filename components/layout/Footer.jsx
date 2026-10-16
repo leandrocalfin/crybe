@@ -39,7 +39,7 @@ const navegacion = [
 const Footer = ({ ajustes }) => {
   const [legal, setLegal] = useState(null);
   const anioActual = new Date().getFullYear();
-  const DIRECCION_CORTA = ajustes?.direccion_corta || "Tucuman 445, General Roca";
+  const DIRECCION_CORTA = ajustes?.mapa || "Tucuman 445, General Roca";
   const TELEFONO = ajustes?.telefono || "298 425-4590";
 
   return (

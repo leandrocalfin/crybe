@@ -15,9 +15,7 @@ const CAMPOS = [
   { clave: "email", label: "Email", placeholder: "info@crybe.com.ar" },
   { clave: "instagram", label: "Instagram (URL)", placeholder: "https://www.instagram.com/..." },
   { clave: "facebook", label: "Facebook (URL, opcional)", placeholder: "https://www.facebook.com/..." },
-  { clave: "direccion", label: "Dirección", placeholder: "Tucumán 445, General Roca · Río Negro" },
-  { clave: "direccion_corta", label: "Dirección corta (pie de página)", placeholder: "Tucuman 445, General Roca" },
-  { clave: "mapa", label: "Mapa (búsqueda de Google Maps)", placeholder: "Tucuman 445, General Roca, Rio Negro" },
+  { clave: "mapa", label: "Dirección", placeholder: "Tucumán 445, General Roca, Río Negro, Argentina" },
   { clave: "horario_lv", label: "Horario lunes a viernes", placeholder: "Lunes a Viernes: 08:00 a 20:00 hs" },
   { clave: "horario_sab", label: "Horario sábado", placeholder: "Sábados: 09:00 a 13:00 hs" },
 ];
