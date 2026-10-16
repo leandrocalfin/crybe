@@ -7,9 +7,9 @@ import FotoField from "./foto-field";
 
 const DIAS = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
 
-const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[13px] text-[#1F1F1F] outline-none focus:bg-lila-100";
+const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[14px] text-[#1F1F1F] outline-none focus:bg-lila-100";
 const labelCls = "mb-1 block text-[11px] font-semibold uppercase tracking-[0.2em] text-lila-500";
-const areaCls = "w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[13px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
+const areaCls = "w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[14px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
 
 function slugify(texto) {
   return texto
@@ -171,7 +171,7 @@ export function EditorProfesional({ inicial, especialidades, count, onCerrar, on
       {borrando && !esNuevo && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[#0A1830]/60 p-4 backdrop-blur-sm" onClick={() => setBorrando(false)}>
           <div className="w-full max-w-[360px] rounded-[20px] bg-white p-6 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <p className="font-serif-display text-[20px] text-lila-900">¿Eliminar?</p>
+            <p className="font-serif-display text-[22px] text-lila-900">¿Eliminar?</p>
             <p className="mt-2 text-[13px] leading-6 text-stone-600">
               Se va a eliminar a <strong>{inicial.nombre}</strong> del equipo. Esta acción no se puede deshacer.
             </p>
@@ -179,7 +179,7 @@ export function EditorProfesional({ inicial, especialidades, count, onCerrar, on
               <button
                 type="button"
                 onClick={() => setBorrando(false)}
-                className="rounded-full border border-stone-200 px-5 py-2 text-[12px] font-semibold text-stone-600"
+                className="rounded-full border border-stone-200 px-5 py-2 text-[13px] font-semibold text-stone-600"
               >
                 Cancelar
               </button>
@@ -187,7 +187,7 @@ export function EditorProfesional({ inicial, especialidades, count, onCerrar, on
                 type="button"
                 disabled={pendiente}
                 onClick={onBorrar}
-                className="rounded-full bg-red-600 px-5 py-2 text-[12px] font-semibold text-white disabled:opacity-60"
+                className="rounded-full bg-red-600 px-5 py-2 text-[13px] font-semibold text-white disabled:opacity-60"
               >
                 {pendiente ? "Eliminando..." : "Sí, eliminar"}
               </button>
@@ -325,7 +325,7 @@ export function EditorProfesional({ inicial, especialidades, count, onCerrar, on
         </div>
       </div>
 
-      {msg && <p className="mt-3 text-[12px] font-semibold text-stone-600">{msg}</p>}
+      {msg && <p className="mt-3 text-[13px] font-semibold text-stone-600">{msg}</p>}
 
       {editando && (
         <div className="mt-3 flex items-center justify-center gap-2">
@@ -333,7 +333,7 @@ export function EditorProfesional({ inicial, especialidades, count, onCerrar, on
             type="button"
             disabled={pendiente}
             onClick={onGuardar}
-            className="rounded-full bg-emerald-600 px-5 py-2 text-[12px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
+            className="rounded-full bg-emerald-600 px-5 py-2 text-[13px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
           >
             {pendiente && !borrando ? "Guardando..." : "Guardar cambios"}
           </button>
@@ -381,7 +381,7 @@ export default function EquipoAdmin({ profesionales, especialidades }) {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={p.foto_url} alt="" className="h-10 w-10 shrink-0 rounded-full object-cover object-top" />
                 ) : (
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#F2F3F9] text-[9px] text-[#6B7280]">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#F2F3F9] text-[11px] text-[#6B7280]">
                     Sin foto
                   </div>
                 )}

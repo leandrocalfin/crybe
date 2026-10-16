@@ -5,9 +5,9 @@ import { ChevronDown } from "lucide-react";
 import { guardarPortada, eliminarPortada } from "./actions";
 import FotoField from "./foto-field";
 
-const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[13px] text-[#1F1F1F] outline-none focus:bg-lila-100";
+const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[14px] text-[#1F1F1F] outline-none focus:bg-lila-100";
 const labelCls = "mb-1 block text-[11px] font-semibold uppercase tracking-[0.2em] text-lila-500";
-const areaCls = "w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[13px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
+const areaCls = "w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[14px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
 const dis = "disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
 
 export function EditorPortada({ portada, count, onCerrar, onGuardado }) {
@@ -128,7 +128,7 @@ export function EditorPortada({ portada, count, onCerrar, onGuardado }) {
         )}
         <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/40 to-transparent" />
         <div className="absolute inset-0 flex flex-col justify-center p-3">
-          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-lila-700">{nombre || "Nombre"}</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-lila-700">{nombre || "Nombre"}</p>
           <p className="mt-0.5 text-[13px] font-medium leading-snug text-[#1F1F1F]">
             {titulo.split("\n")[0] || "Título de la portada"}
           </p>
@@ -159,7 +159,7 @@ export function EditorPortada({ portada, count, onCerrar, onGuardado }) {
         </div>
       </div>
 
-      {msg && <p className="mt-3 text-[12px] font-semibold text-stone-600">{msg}</p>}
+      {msg && <p className="mt-3 text-[13px] font-semibold text-stone-600">{msg}</p>}
 
       {editando && (
         <div className="mt-3 flex items-center justify-center gap-2">
@@ -167,7 +167,7 @@ export function EditorPortada({ portada, count, onCerrar, onGuardado }) {
             type="button"
             disabled={pendiente || (!esNueva && !cambiado)}
             onClick={onGuardar}
-            className="rounded-full bg-emerald-600 px-5 py-2 text-[12px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
+            className="rounded-full bg-emerald-600 px-5 py-2 text-[13px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
           >
             {pendiente && !borrando ? "Guardando..." : "Guardar cambios"}
           </button>
@@ -210,19 +210,24 @@ export default function InicioAdmin({ portadas }) {
               <button
                 type="button"
                 onClick={() => setAbierta((a) => (a === p.id ? null : p.id))}
-                className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-colors ${isAbierta ? "bg-lila-100/70" : "hover:bg-lila-50/50"}`}
+                aria-expanded={isAbierta}
+                className={`flex w-full items-center gap-3 px-4 py-2 text-left transition-colors ${isAbierta ? "bg-lila-100/70" : "hover:bg-lila-50/50"}`}
               >
-                {thumb ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={thumb} alt="" className="h-10 w-10 shrink-0 rounded-lg object-cover" />
-                ) : (
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[#F2F3F9] text-[9px] text-[#6B7280]">
-                    Sin foto
-                  </div>
-                )}
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-[13px] font-semibold text-[#1F1F1F]">{p.nombre || p.titulo.split("\n")[0]}</p>
-                </div>
+                {/* Recuadro uniforme: con object-contain las ilustraciones no se
+                    recortan distinto en cada fila y todas ocupan lo mismo. */}
+                <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-lg bg-[#F2F3F9]">
+                  {thumb ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={thumb} alt="" className="h-full w-full object-contain p-0.5" />
+                  ) : (
+                    <span className="px-1 text-center text-[10px] font-medium leading-tight text-[#9AA0AC]">Sin foto</span>
+                  )}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[13px] font-semibold leading-snug text-[#1F1F1F]">
+                    {p.nombre || p.titulo.split("\n")[0]}
+                  </span>
+                </span>
                 <ChevronDown size={18} className={`shrink-0 text-lila-700 transition-transform ${isAbierta ? "rotate-180" : ""}`} />
               </button>
               {isAbierta && <EditorPortada portada={p} count={total} />}

@@ -5,7 +5,7 @@ import { Check, Pencil, X } from "lucide-react";
 import { guardarAjustes, cambiarPassword } from "./actions";
 import FotoField from "./foto-field";
 
-const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[13px] text-[#1F1F1F] outline-none focus:bg-lila-100";
+const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[14px] text-[#1F1F1F] outline-none focus:bg-lila-100";
 const labelCls = "mb-1 block text-[11px] font-semibold uppercase tracking-[0.2em] text-lila-500";
 const headerCls = "text-[11px] font-bold uppercase tracking-[0.18em] text-lila-700";
 
@@ -113,7 +113,7 @@ export default function DatosAdmin({ ajustes }) {
         <div className="flex items-center justify-between gap-3 bg-lila-50/60 px-4 py-2.5">
           <p className={headerCls}>Contacto y redes</p>
           <div className="flex items-center gap-2">
-            {msg && <span className="text-[12px] font-semibold text-emerald-700">{msg}</span>}
+            {msg && <span className="text-[13px] font-semibold text-emerald-700">{msg}</span>}
             {editando ? (
               <>
                 <button
@@ -194,7 +194,7 @@ export default function DatosAdmin({ ajustes }) {
               </div>
             </div>
             <div className="mt-3 flex items-center justify-end gap-3">
-              {msgPass && <span className="text-[12px] font-semibold text-emerald-700">{msgPass}</span>}
+              {msgPass && <span className="text-[13px] font-semibold text-emerald-700">{msgPass}</span>}
               <button
                 type="button"
                 disabled={pendiente || !pass1 || pass1 !== pass2}

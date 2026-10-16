@@ -5,9 +5,9 @@ import { ChevronDown } from "lucide-react";
 import { guardarEspecialidad, eliminarEspecialidad } from "./actions";
 import FotoField from "./foto-field";
 
-const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[13px] text-[#1F1F1F] outline-none focus:bg-lila-100";
+const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[14px] text-[#1F1F1F] outline-none focus:bg-lila-100";
 const labelCls = "mb-1 block text-[11px] font-semibold uppercase tracking-[0.2em] text-lila-500";
-const areaCls = "w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[13px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
+const areaCls = "w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[14px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
 const dis = "disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
 
 function slugify(texto) {
@@ -143,7 +143,7 @@ function EditorTarjeta({ esp, onCerrar, onGuardado }) {
         </div>
       </div>
 
-      {msg && <p className="mt-3 text-[12px] font-semibold text-stone-600">{msg}</p>}
+      {msg && <p className="mt-3 text-[13px] font-semibold text-stone-600">{msg}</p>}
 
       {editando && (
         <div className="mt-3 flex items-center justify-center gap-2">
@@ -151,7 +151,7 @@ function EditorTarjeta({ esp, onCerrar, onGuardado }) {
             type="button"
             disabled={pendiente || (!esNueva && !cambiado)}
             onClick={onGuardar}
-            className="rounded-full bg-emerald-600 px-5 py-2 text-[12px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
+            className="rounded-full bg-emerald-600 px-5 py-2 text-[13px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
           >
             {pendiente && !borrando ? "Guardando..." : "Guardar cambios"}
           </button>
@@ -198,7 +198,7 @@ export default function EspecialidadesAdmin({ especialidades }) {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={esp.imagen} alt="" className="h-10 w-10 shrink-0 rounded-lg object-cover" />
                 ) : (
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[#F2F3F9] text-[9px] text-[#6B7280]">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[#F2F3F9] text-[11px] text-[#6B7280]">
                     Sin foto
                   </div>
                 )}

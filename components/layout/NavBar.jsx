@@ -268,10 +268,54 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
     // el click no hacía nada.
     if (e && pathname === "/") {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setAbierto(false);
+      requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "smooth" }));
+      setSeccionActiva("inicio");
+      return;
     }
     setAbierto(false);
     setSeccionActiva("inicio");
+  };
+
+  // Desplazamiento a una sección.
+  //
+  // Va con scrollIntoView y no con window.scrollTo por dos motivos:
+  //  1) globals.css define `section[id] { scroll-margin-top: 78px / 84px }`,
+  //     así que el scrollIntoView deja la sección justo en el cambio de color
+  //     sin que Calculate el offset a mano.
+  //  2) `html, body { overflow-x: hidden }` (globals.css) convierte al raíz en
+  //     contenedor de scroll, y con eso window.scrollTo deja de ser confiable:
+  //     respondía la primera vez y después ya no bajaba.
+  //
+  // El scroll va en requestAnimationFrame porque antes cerramos el menú: sin
+  // esperar a que React monte el DOM, el panel todavía ocupa lugar y falsea el
+  // cálculo de la posición destino.
+  const irASeccion = (e, id) => {
+    if (pathname !== "/") return false;
+    e.preventDefault();
+    setAbierto(false);
+    setSeccionActiva(id);
+    const destinoId = id === "staff" ? "equipo" : id;
+    requestAnimationFrame(() => {
+      const destino = document.getElementById(destinoId);
+      if (!destino) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      destino.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    return true;
+  };
+
+  // Un solo handler para los dos menús. El móvil antes hacía setAbierto(false)
+  // y dejaba que el navegador siguiera el hash: al desmontarse el <a> en el
+  // mismo click, la activación se perdía y el menú no hacía nada.
+  const irAlLink = (e, link) => {
+    if (link.id === "inicio") {
+      irArriba(e);
+      return;
+    }
+    irASeccion(e, link.id);
   };
 
   return (
@@ -328,6 +372,7 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
       }}
       className={`
         relative
+        z-[70]
         transition-[background-color,box-shadow,backdrop-filter]
         duration-500
         ease-in-out
@@ -427,13 +472,7 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
               <a
                 key={link.nombre}
                 href={link.href}
-                onClick={(e) => {
-                  if (link.id === "inicio") {
-                    irArriba(e);
-                  } else {
-                    setSeccionActiva(link.id);
-                  }
-                }}
+                onClick={(e) => irAlLink(e, link)}
                 className={`
                   group
                   relative
@@ -860,6 +899,7 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
             absolute
             inset-x-0
             top-full
+            z-[70]
             max-h-[calc(100vh-110px)]
             overflow-y-auto
             overscroll-contain
@@ -881,14 +921,7 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
                 <a
                   key={link.nombre}
                   href={link.href}
-                  onClick={(e) => {
-                    if (link.id === "inicio") {
-                      irArriba(e);
-                    } else {
-                      setAbierto(false);
-                      setSeccionActiva(link.id);
-                    }
-                  }}
+                  onClick={(e) => irAlLink(e, link)}
                   className={`
                     group
                     relative

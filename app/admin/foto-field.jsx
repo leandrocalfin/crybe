@@ -36,7 +36,7 @@ export default function FotoField({ value, onChange, etiqueta = "Foto", deshabil
           // eslint-disable-next-line @next/next/no-img-element
           <img src={value} alt="Vista previa" className="h-16 w-16 rounded-xl object-cover object-top" />
         ) : (
-          <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-[#F2F3F9] text-[10px] text-[#6B7280]">
+          <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-[#F2F3F9] text-[11px] text-[#6B7280]">
             Sin foto
           </div>
         )}

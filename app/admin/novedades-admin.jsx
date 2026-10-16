@@ -15,9 +15,9 @@ const CATEGORIAS = [
   "Equipo CRYBE",
 ];
 
-const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[13px] text-[#1F1F1F] outline-none focus:bg-lila-100";
+const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[14px] text-[#1F1F1F] outline-none focus:bg-lila-100";
 const labelCls = "mb-1 block text-[11px] font-semibold uppercase tracking-[0.2em] text-lila-500";
-const areaCls = "w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[13px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
+const areaCls = "w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[14px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
 const dis = "disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
 
 function slugify(texto) {
@@ -73,7 +73,7 @@ function GaleriaField({ value, onChange, deshabilitado }) {
                 type="button"
                 disabled={deshabilitado || subiendo}
                 onClick={() => { setSlot(i); inputRef.current?.click(); }}
-                className="grid h-14 w-14 place-items-center rounded-lg border border-dashed border-stone-300 bg-[#F8F7FC] text-[18px] text-stone-400 hover:border-lila-500 hover:text-lila-700 disabled:opacity-50"
+                className="grid h-14 w-14 place-items-center rounded-lg border border-dashed border-stone-300 bg-[#F8F7FC] text-[17px] text-stone-400 hover:border-lila-500 hover:text-lila-700 disabled:opacity-50"
               >
                 +
               </button>
@@ -83,7 +83,7 @@ function GaleriaField({ value, onChange, deshabilitado }) {
                 type="button"
                 onClick={() => onChange(lista.filter((_, j) => j !== i))}
                 aria-label="Quitar imagen"
-                className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-white text-[12px] font-bold text-red-600 shadow"
+                className="absolute -right-1 -top-1 grid h-5 w-5 place-items-center rounded-full bg-white text-[13px] font-bold text-red-600 shadow"
               >
                 ×
               </button>
@@ -263,7 +263,7 @@ export function EditorNovedad({ inicial, profesionales, onCerrar, onGuardado }) 
         </div>
       </div>
 
-      {msg && <p className="mt-3 text-[12px] font-semibold text-stone-600">{msg}</p>}
+      {msg && <p className="mt-3 text-[13px] font-semibold text-stone-600">{msg}</p>}
 
       {editando && (
         <div className="mt-3 flex items-center justify-center gap-2">
@@ -271,7 +271,7 @@ export function EditorNovedad({ inicial, profesionales, onCerrar, onGuardado }) 
             type="button"
             disabled={pendiente}
             onClick={onGuardar}
-            className="rounded-full bg-emerald-600 px-5 py-2 text-[12px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
+            className="rounded-full bg-emerald-600 px-5 py-2 text-[13px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
           >
             {pendiente && !borrando ? "Guardando..." : "Guardar cambios"}
           </button>
@@ -281,7 +281,7 @@ export function EditorNovedad({ inicial, profesionales, onCerrar, onGuardado }) 
       {borrando && !esNuevo && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[#0A1830]/60 p-4 backdrop-blur-sm" onClick={() => setBorrando(false)}>
           <div className="w-full max-w-[360px] rounded-[20px] bg-white p-6 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            <p className="font-serif-display text-[20px] text-lila-900">¿Eliminar?</p>
+            <p className="font-serif-display text-[22px] text-lila-900">¿Eliminar?</p>
             <p className="mt-2 text-[13px] leading-6 text-stone-600">
               Se va a eliminar el artículo <strong>{inicial.titulo}</strong>. Esta acción no se puede deshacer.
             </p>
@@ -289,7 +289,7 @@ export function EditorNovedad({ inicial, profesionales, onCerrar, onGuardado }) 
               <button
                 type="button"
                 onClick={() => setBorrando(false)}
-                className="rounded-full border border-stone-200 px-5 py-2 text-[12px] font-semibold text-stone-600"
+                className="rounded-full border border-stone-200 px-5 py-2 text-[13px] font-semibold text-stone-600"
               >
                 Cancelar
               </button>
@@ -297,7 +297,7 @@ export function EditorNovedad({ inicial, profesionales, onCerrar, onGuardado }) 
                 type="button"
                 disabled={pendiente}
                 onClick={onBorrar}
-                className="rounded-full bg-red-600 px-5 py-2 text-[12px] font-semibold text-white disabled:opacity-60"
+                className="rounded-full bg-red-600 px-5 py-2 text-[13px] font-semibold text-white disabled:opacity-60"
               >
                 {pendiente ? "Eliminando..." : "Sí, eliminar"}
               </button>
@@ -347,7 +347,7 @@ export default function NovedadesAdmin({ novedades, profesionales }) {
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={n.imagen_principal} alt="" className="h-10 w-10 shrink-0 rounded-lg object-cover" />
                 ) : (
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[#F2F3F9] text-[9px] text-[#6B7280]">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[#F2F3F9] text-[11px] text-[#6B7280]">
                     Sin foto
                   </div>
                 )}
@@ -355,7 +355,7 @@ export default function NovedadesAdmin({ novedades, profesionales }) {
                   <p className="truncate text-[13px] font-semibold text-[#1F1F1F]">{n.titulo}</p>
                 </div>
                 {!n.publicado && (
-                  <span className="shrink-0 rounded-full bg-gray-200 px-2.5 py-0.5 text-[10px] font-semibold text-gray-600">Borrador</span>
+                  <span className="shrink-0 rounded-full bg-gray-200 px-2.5 py-0.5 text-[11px] font-semibold text-gray-600">Borrador</span>
                 )}
                 <ChevronDown size={18} className={`shrink-0 text-lila-700 transition-transform ${isAbierta ? "rotate-180" : ""}`} />
               </button>

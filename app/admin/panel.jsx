@@ -82,7 +82,7 @@ function BandejaEntrada({ contactos }) {
             key={f.nombre}
             type="button"
             onClick={() => setSoloNoLeidos(f.id)}
-            className={`rounded-full px-4 py-1.5 text-[12px] font-semibold ${soloNoLeidos === f.id ? "bg-lila-900 text-white" : "border border-stone-200 bg-white text-stone-600 hover:border-lila-500"}`}
+            className={`rounded-full px-4 py-1.5 text-[13px] font-semibold ${soloNoLeidos === f.id ? "bg-lila-900 text-white" : "border border-stone-200 bg-white text-stone-600 hover:border-lila-500"}`}
           >
             {f.nombre}
           </button>
@@ -110,7 +110,7 @@ function BandejaEntrada({ contactos }) {
                   </span>
                   <span className="shrink-0 text-[11px] text-stone-400">{fechaCorta(c.created_at)}</span>
                 </span>
-                <span className="mt-0.5 block truncate text-[12.5px] text-stone-500">
+                <span className="mt-0.5 block truncate text-[13px] text-stone-500">
                   <span className="font-semibold text-lila-700">{c.motivo}</span>
                   {" — "}{c.mensaje}
                 </span>
@@ -134,7 +134,7 @@ function BandejaEntrada({ contactos }) {
                 type="button"
                 onClick={() => setAbiertoId(null)}
                 aria-label="Cerrar"
-                className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#F2F3F9] text-[16px] text-stone-500 hover:bg-stone-200"
+                className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[#F2F3F9] text-[17px] text-stone-500 hover:bg-stone-200"
               >
                 ×
               </button>
@@ -146,7 +146,7 @@ function BandejaEntrada({ contactos }) {
                 href={waAbierto}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-[12px] font-semibold text-white hover:bg-emerald-500"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-[13px] font-semibold text-white hover:bg-emerald-500"
               >
                 Responder por WhatsApp
               </a>
@@ -154,7 +154,7 @@ function BandejaEntrada({ contactos }) {
                 type="button"
                 disabled={pendiente}
                 onClick={() => start(async () => { await marcarLeido(abierto.id, !abierto.leido); })}
-                className="rounded-xl border border-stone-200 bg-white px-4 py-2 text-[12px] font-semibold text-stone-600 hover:border-lila-500 hover:text-lila-900"
+                className="rounded-xl border border-stone-200 bg-white px-4 py-2 text-[13px] font-semibold text-stone-600 hover:border-lila-500 hover:text-lila-900"
               >
                 {abierto.leido ? "Marcar no leído" : "Marcar leído"}
               </button>
@@ -164,14 +164,14 @@ function BandejaEntrada({ contactos }) {
                     type="button"
                     disabled={pendiente}
                     onClick={() => start(async () => { await eliminarContacto(abierto.id); setAbiertoId(null); })}
-                    className="rounded-xl bg-red-600 px-4 py-2 text-[12px] font-semibold text-white"
+                    className="rounded-xl bg-red-600 px-4 py-2 text-[13px] font-semibold text-white"
                   >
                     Sí, eliminar
                   </button>
                   <button
                     type="button"
                     onClick={() => setConfirmar(false)}
-                    className="rounded-xl border border-stone-200 px-4 py-2 text-[12px] font-semibold text-stone-500"
+                    className="rounded-xl border border-stone-200 px-4 py-2 text-[13px] font-semibold text-stone-500"
                   >
                     Cancelar
                   </button>
@@ -180,7 +180,7 @@ function BandejaEntrada({ contactos }) {
                 <button
                   type="button"
                   onClick={() => setConfirmar(true)}
-                  className="rounded-xl px-3 py-2 text-[12px] font-semibold text-red-600 hover:bg-red-50"
+                  className="rounded-xl px-3 py-2 text-[13px] font-semibold text-red-600 hover:bg-red-50"
                 >
                   Eliminar
                 </button>
@@ -225,7 +225,46 @@ export default function Panel({ contactos, profesionales, novedades, especialida
 
   return (
     <div className="flex flex-1 flex-col overflow-x-hidden bg-gradient-to-br from-[#E9F1F8] via-[#F4F8FB] to-[#E2EBF4] pb-10">
-      <div className="mx-auto grid w-full min-w-0 max-w-6xl flex-1 items-start gap-4 px-4 py-4 sm:px-5 md:grid-cols-[240px_minmax(0,1fr)]">
+      <div className="mx-auto grid w-full min-w-0 max-w-6xl flex-1 items-start gap-4 px-4 py-4 sm:px-5 grid-cols-[minmax(0,1fr)] md:grid-cols-[240px_minmax(0,1fr)]">
+        {/* MOBILE / TABLET: el sidebar es hidden hasta md, así que sin esto
+            no había forma de cambiar de sección ni de cerrar sesión. */}
+        <div className="min-w-0 md:hidden">
+          <div className="px-1 text-center">
+            <h1 className="font-serif-display text-[18px] font-semibold leading-tight tracking-tight text-lila-900">
+              Panel de administración
+            </h1>
+            <p className="mt-1 text-[13px] font-medium leading-tight text-stone-500">
+              Manejá el contenido del sitio
+            </p>
+          </div>
+
+          {/* Las siete entran en pantalla: envuelven en varias filas en vez de
+              deslizar, así no queda ninguna pestaña escondida a la derecha. */}
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {SECCIONES.map((s) => (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => { setTab(s.id); window.scrollTo({ top: 0 }); }}
+                aria-current={tab === s.id ? "page" : undefined}
+                className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[13px] font-semibold transition-all ${
+                  tab === s.id
+                    ? "border-lila-800/20 bg-lila-900 text-white shadow-[0_4px_16px_rgba(61,52,99,0.22)]"
+                    : "border-white/40 bg-white/70 text-stone-600 backdrop-blur-sm hover:border-lila-100 hover:bg-white/90 hover:text-lila-900"
+                }`}
+              >
+                <s.icon size={13} className="shrink-0" />
+                {s.label}
+                {s.id === "consultas" && noLeidos > 0 && (
+                  <span className={`rounded-full px-1.5 text-[11px] font-bold ${tab === s.id ? "bg-white/20 text-white" : "bg-lila-100 text-lila-900"}`}>
+                    {noLeidos}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* SIDEBAR */}
         <nav className="hidden min-w-0 space-y-1.5 self-start rounded-[20px] border border-white/60 bg-white/55 p-2.5 shadow-[0_8px_32px_rgba(61,52,99,0.08),0_2px_8px_rgba(61,52,99,0.06)] backdrop-blur-xl md:block">
           <div className="relative overflow-hidden rounded-[14px] px-3 pb-3.5 pt-4 text-center">
@@ -240,7 +279,7 @@ export default function Panel({ contactos, profesionales, novedades, especialida
             <h1 className="relative font-serif-display text-[17px] font-semibold leading-[1.15] tracking-tight text-lila-900">
               Panel de administración
             </h1>
-            <p className="relative mt-1.5 text-[11.5px] font-semibold leading-snug text-stone-600">
+            <p className="relative mt-1.5 text-[13px] font-semibold leading-snug text-stone-600">
               Manejá el contenido del sitio
             </p>
           </div>
@@ -258,7 +297,7 @@ export default function Panel({ contactos, profesionales, novedades, especialida
               <s.icon size={18} className="shrink-0" />
               {s.label}
               {s.id === "consultas" && noLeidos > 0 && (
-                <span className={`ml-auto rounded-full px-2 py-0.5 text-[10px] font-bold ${tab === s.id ? "bg-white/20 text-white" : "bg-lila-100 text-lila-900"}`}>
+                <span className={`ml-auto rounded-full px-2 py-0.5 text-[11px] font-bold ${tab === s.id ? "bg-white/20 text-white" : "bg-lila-100 text-lila-900"}`}>
                   {noLeidos}
                 </span>
               )}
@@ -277,32 +316,9 @@ export default function Panel({ contactos, profesionales, novedades, especialida
 
         {/* CONTENIDO */}
         <div className="min-h-[360px] min-w-0 max-w-full overflow-hidden rounded-[24px] border border-white/60 bg-white/80 p-4 shadow-[0_8px_32px_rgba(61,52,99,0.08)] backdrop-blur-xl sm:p-5">
-          <div className="flex items-center justify-between gap-3">
-            <div>
-              <h2 className="font-serif-display text-xl capitalize text-lila-900">{seccion?.label}</h2>
-              <p className="mt-1 text-sm text-stone-500">{seccion?.desc}</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => cerrarSesion()}
-              className="inline-flex items-center gap-1 text-xs font-semibold text-red-600 transition-colors hover:text-red-700 md:hidden"
-            >
-              <LogOut size={14} /> Salir
-            </button>
-          </div>
-
-          {/* Tabs mobile */}
-          <div className="mt-3 flex gap-1.5 overflow-x-auto pb-1 md:hidden">
-            {SECCIONES.map((s) => (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setTab(s.id)}
-                className={`shrink-0 rounded-full px-3.5 py-1.5 text-[12px] font-semibold ${tab === s.id ? "bg-lila-900 text-white" : "bg-white text-stone-600 border border-stone-200"}`}
-              >
-                {s.label}{s.id === "consultas" && noLeidos > 0 ? ` (${noLeidos})` : ""}
-              </button>
-            ))}
+          <div>
+            <h2 className="font-serif-display text-[18px] capitalize text-lila-900">{seccion?.label}</h2>
+            <p className="mt-1 text-[13px] text-stone-500">{seccion?.desc}</p>
           </div>
 
           <div className="mt-4">

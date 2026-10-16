@@ -10,7 +10,7 @@ import {
 import { ICONOS_NOMBRES, ICONOS_ETIQUETAS, Icono } from "../../lib/iconos";
 import { MAX_PALABRAS_DESCRIPCION, contarPalabras } from "../../lib/limites";
 
-const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[13px] text-[#1F1F1F] outline-none focus:bg-lila-100";
+const inputCls = "h-9 w-full rounded-xl border border-stone-200 bg-white px-3 text-[14px] text-[#1F1F1F] outline-none focus:bg-lila-100";
 const labelCls = "mb-1 block text-[11px] font-semibold uppercase tracking-[0.2em] text-lila-500";
 const MAX_ITEMS = 8;
 
@@ -130,14 +130,14 @@ function EditorItem({ item, count, onCerrar }) {
           <textarea value={texto} disabled={!editando} onChange={(e) => setTexto(e.target.value)} rows={3} className="w-full rounded-xl border border-stone-200 bg-white p-2.5 text-[13px] outline-none focus:bg-lila-100 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500" />
         </div>
       </div>
-      {msg && <p className="mt-3 text-[12px] font-semibold text-stone-600">{msg}</p>}
+      {msg && <p className="mt-3 text-[13px] font-semibold text-stone-600">{msg}</p>}
       {editando && (
       <div className="mt-3 flex items-center justify-center gap-2">
         <button
           type="button"
           disabled={pendiente || (!esNuevo && !cambiado)}
           onClick={onGuardar}
-          className="rounded-full bg-emerald-600 px-5 py-2 text-[12px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
+          className="rounded-full bg-emerald-600 px-5 py-2 text-[13px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
         >
           {pendiente ? "Guardando..." : "Guardar cambios"}
         </button>
@@ -224,14 +224,14 @@ export default function NosotrosAdmin({ seccion, items }) {
             )}
           </div>
         </div>
-        {msgCab && <p className="mt-2 text-[12px] font-semibold text-stone-600">{msgCab}</p>}
+        {msgCab && <p className="mt-2 text-[13px] font-semibold text-stone-600">{msgCab}</p>}
         {editandoCab && (
         <div className="mt-3 flex justify-center">
           <button
             type="button"
             disabled={pendiente || !cabCambiada || excede}
             onClick={onGuardarCabecera}
-            className="rounded-full bg-emerald-600 px-5 py-2 text-[12px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
+            className="rounded-full bg-emerald-600 px-5 py-2 text-[13px] font-semibold text-white hover:brightness-110 disabled:opacity-40"
           >
             {pendiente ? "Guardando..." : "Guardar cambios"}
           </button>
