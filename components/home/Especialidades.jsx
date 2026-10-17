@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Reveal from "./Reveal";
 
 const especialidades = [
   {
@@ -76,12 +77,9 @@ const Especialidades = ({ items, titulo, descripcion }) => {
         {/* GRID — estilo referencia: imagen completa + título abajo, hover muestra descripción */}
         <div className="flex flex-wrap justify-center gap-3 sm:gap-5 lg:gap-6">
           {lista.map((esp, i) => (
-            <motion.div
+            <Reveal
               key={esp.slug}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.55, delay: (i % 3) * 0.08 }}
+              delay={(i % 3) * 0.08}
               className="group relative aspect-square w-[calc(50%-6px)] overflow-hidden rounded-none bg-white p-1 shadow-[0_2px_16px_rgba(30,40,80,0.08)] ring-1 ring-[#0F3A7A]/10 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_45px_rgba(15,58,122,0.22)] sm:w-[calc(50%-10px)] lg:w-[270px] xl:w-[285px]"
             >
               <div className="relative h-full w-full overflow-hidden">
@@ -115,7 +113,7 @@ const Especialidades = ({ items, titulo, descripcion }) => {
                   </p>
                 </div>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -11,6 +11,7 @@ import {
   Network,
 } from "lucide-react";
 import { ICONOS } from "../../lib/iconos";
+import Reveal from "./Reveal";
 
 const pilares = [
   {
@@ -141,12 +142,11 @@ const Nosotros = ({ titulo, parrafos, items }) => {
           {lista.map((p, i) => {
             const Icono = iconoDe(p);
             return (
-              <motion.div
+              <Reveal
                 key={p.titulo + i}
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.55, delay: (i % 8) * 0.08 }}
+                y={22}
+                delay={(i % 8) * 0.08}
+                amount={0.3}
                 className="group border-t border-[#0F3A7A]/10 pt-5 text-left sm:pt-7"
               >
                 <span className="flex items-center gap-2.5 sm:gap-3">
@@ -161,7 +161,7 @@ const Nosotros = ({ titulo, parrafos, items }) => {
                 <p className="mt-2 text-[12.5px] leading-6 text-[#333A45] sm:mt-3 sm:text-[13.5px] sm:leading-6">
                   {p.texto}
                 </p>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

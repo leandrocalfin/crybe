@@ -23,6 +23,17 @@ const literata = Literata({
   display: "swap",
 });
 
+// Las fotos en producción salen del Storage de Supabase: preconectar recorta
+// un roundtrip del handshake antes de la primera imagen (menos parpadeo).
+let supabaseOrigin = null;
+try {
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    supabaseOrigin = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin;
+  }
+} catch {
+  supabaseOrigin = null;
+}
+
 // Sin dominio todavía: mientras tanto los absolutos apuntan a la URL de
 // Workers. Cuando compren el dominio, cambiar SOLO esta línea.
 export const metadata = {
@@ -54,6 +65,11 @@ export default function RootLayout({ children }) {
       lang="es"
       className={`${manrope.variable} ${spartan.variable} ${literata.variable}`}
     >
+      <head>
+        {supabaseOrigin ? (
+          <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" />
+        ) : null}
+      </head>
       <body className="min-h-screen bg-[#F4F8FB] text-[#1F1F1F] antialiased">
         {children}
       </body>

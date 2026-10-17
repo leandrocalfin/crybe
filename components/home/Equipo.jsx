@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Info, X, CalendarDays, MapPin, Video } from "lucide-react";
 
 import { profesionales } from "../../data/profesionales";
+import Reveal from "./Reveal";
 
 const FotoConFallback = ({ profesional, className }) => {
   // Orden: primero la foto real (Supabase o la configurada), y SOLO si falla
@@ -39,11 +40,12 @@ const TarjetaProfesional = ({ profesional, index, onVerPerfil }) => {
   const waLink = `https://wa.me/${profesional.whatsapp}?text=${encodeURIComponent(`Hola ${profesional.nombre}, quiero consultar por un turno en CRYBE.`)}`;
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
-      transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.3) }}
+    <Reveal
+      as="article"
+      y={20}
+      duration={0.5}
+      delay={Math.min(index * 0.05, 0.3)}
+      amount={0.1}
       className="
         flex h-full flex-col justify-between rounded-none border border-[#D5E0EE] bg-white p-2 lg:p-3
         shadow-[0_12px_32px_-8px_rgba(30,40,80,0.28)]
@@ -112,7 +114,7 @@ const TarjetaProfesional = ({ profesional, index, onVerPerfil }) => {
           Ver perfil completo
         </button>
       </div>
-    </motion.article>
+    </Reveal>
   );
 };
 

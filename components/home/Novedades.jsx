@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import Reveal from "./Reveal";
 
 const novedades = [
   {
@@ -290,13 +291,11 @@ const Novedades = ({ items }) => {
         {/* ARTÍCULOS */}
         <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
           {visibles.map((novedad, index) => (
-            <motion.article
+            <Reveal
+              as="article"
               key={novedad.id}
               onClick={() => setArticulo(novedad)}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.55, delay: index * 0.08 }}
+              delay={index * 0.08}
               className="
                 group flex w-[calc(50%-0.5rem)] cursor-pointer flex-col justify-between overflow-hidden rounded-[16px] border border-[#D5E0EE] bg-white
                 shadow-[0_12px_32px_-8px_rgba(30,40,80,0.28)]
@@ -342,7 +341,7 @@ const Novedades = ({ items }) => {
                   Leer artículo completo
                 </button>
               </div>
-</motion.article>
+</Reveal>
           ))}
         </div>
 
