@@ -193,8 +193,30 @@ h4 {
 }
 
 /* ==========================================
+   NAVBAR
+   El blur esmerilado (backdrop-filter) sobre todo el ancho fijo obliga a la
+   GPU a recomponer en cada frame del scroll. En desktop se mantiene; en
+   táctil (celu/tablet) se usa fondo sólido, que no cuesta nada.
+   ========================================== */
+.navbar-bar {
+  background: transparent;
+  transition: background-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+.navbar-scrolled {
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+@media (hover: hover) and (pointer: fine) {
+  .navbar-scrolled {
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+}
+
+/* ==========================================
    RESPONSIVE UTILITIES
-========================================== */
+   ========================================== */
 
 /* Evitar overflow horizontal en móvil.
    Importa usar `clip` y no `hidden`: `overflow-x: hidden` en <html> hace que

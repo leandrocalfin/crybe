@@ -371,24 +371,11 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
         </div>
       </div>
       <header
-      style={{
-        background: scrolled
-          ? "rgba(255,255,255,0.55)"
-          : "transparent",
-        backdropFilter: scrolled ? "blur(14px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(14px)" : "none",
-      }}
       className={`
         relative
         z-[70]
-        transition-[background-color,box-shadow,backdrop-filter]
-        duration-500
-        ease-in-out
-        ${
-          scrolled
-            ? "shadow-[0_8px_25px_rgba(0,0,0,0.08)]"
-            : ""
-        }
+        navbar-bar
+        ${scrolled ? "navbar-scrolled" : ""}
       `}
       >
       <nav
