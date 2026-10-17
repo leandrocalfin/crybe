@@ -84,10 +84,12 @@ const Hero = ({ slides }) => {
           />
         </AnimatePresence>
 
-        {/* OVERLAY — texto legible a la izquierda, imagen nítida a la derecha */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/45 via-35% to-transparent sm:from-white/85 sm:via-white/35 sm:via-40%" />
+        {/* OVERLAY lateral — solo desktop: en mobile/tablet la foto va limpia,
+            solo con degradado blanco arriba (fundido al navbar) y abajo
+            (fundido al fondo). */}
+        <div className="absolute inset-0 hidden bg-gradient-to-r from-white/90 via-white/45 via-35% to-transparent sm:from-white/85 sm:via-white/35 sm:via-40% lg:block" />
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 hidden lg:block"
           style={{
             background:
               "linear-gradient(90deg, rgba(205,190,240,0.16) 0%, rgba(205,190,240,0.0) 20%, rgba(255,255,255,0.0) 55%, rgba(255,255,255,0.0) 100%)",
