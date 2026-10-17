@@ -313,23 +313,20 @@ const Footer = ({ ajustes }) => {
               © {anioActual} Centro CRYBE. Todos los derechos reservados.
             </p>
 
-            <div className="flex flex-row flex-wrap items-center justify-center gap-x-2 gap-y-0.5">
-              <span aria-hidden="true" className="hidden h-1 w-1 rounded-full bg-[#FFFFFF]/30" />
-
-              <button
-                type="button"
-                onClick={() => setLegal("aviso")}
-                className="flex min-h-[44px] items-center transition-colors hover:text-[#FFFFFF]"
+            <div className="flex flex-row flex-wrap items-center justify-center gap-x-2 gap-y-0">
+              <a
+                href="/admin/login"
+                className="flex min-h-[28px] items-center transition-colors hover:text-[#FFFFFF]"
               >
-                Aviso Legal
-              </button>
+                Acceso admin
+              </a>
 
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[#FFFFFF]/30" />
 
               <button
                 type="button"
                 onClick={() => setLegal("privacidad")}
-                className="flex min-h-[44px] items-center transition-colors hover:text-[#FFFFFF]"
+                className="flex min-h-[28px] items-center transition-colors hover:text-[#FFFFFF]"
               >
                 Política de Privacidad
               </button>
@@ -339,19 +336,22 @@ const Footer = ({ ajustes }) => {
               <button
                 type="button"
                 onClick={() => setLegal("cookies")}
-                className="flex min-h-[44px] items-center transition-colors hover:text-[#FFFFFF]"
+                className="flex min-h-[28px] items-center transition-colors hover:text-[#FFFFFF]"
               >
                 Política de Cookies
               </button>
 
-              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[#FFFFFF]/30" />
+              <span className="flex items-center gap-x-2">
+                <span aria-hidden="true" className="h-1 w-1 rounded-full bg-[#FFFFFF]/30" />
 
-              <a
-                href="/admin/login"
-                className="flex min-h-[44px] items-center transition-colors hover:text-[#FFFFFF]"
-              >
-                Acceso admin
-              </a>
+                <button
+                  type="button"
+                  onClick={() => setLegal("aviso")}
+                  className="flex min-h-[28px] items-center transition-colors hover:text-[#FFFFFF]"
+                >
+                  Aviso Legal
+                </button>
+              </span>
             </div>
           </div>
         </div>

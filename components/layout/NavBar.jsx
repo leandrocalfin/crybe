@@ -550,7 +550,7 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
               <img
                 src={adminAvatar || "/logoSinFondo.png"}
                 alt=""
-                className="h-9 w-9 rounded-full bg-white object-cover ring-2 ring-lila-500"
+                className="h-9 w-9 rounded-full bg-white object-cover ring-2 ring-[#0F3A7A]"
               />
               <ChevronDown
                 size={15}
@@ -752,7 +752,7 @@ const Navbar = ({ adminEmail: emailInicial = null, adminAvatar: avatarInicial = 
                 <img
                   src={adminAvatar || "/logoSinFondo.png"}
                   alt=""
-                  className="h-9 w-9 rounded-full bg-white object-cover ring-2 ring-lila-500"
+                  className="h-9 w-9 rounded-full bg-white object-cover ring-2 ring-[#0F3A7A]"
                 />
                 <ChevronDown
                   size={15}
